@@ -434,7 +434,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ShareScreen(
-                                  id: 6,
+                                  id: 4,
                                 ),
                               ),
                             );

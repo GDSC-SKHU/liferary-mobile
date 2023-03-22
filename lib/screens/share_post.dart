@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:liferary/utilities/palette.dart';
 import '../API/authController.dart';
@@ -265,9 +264,9 @@ class _ShareScreenState extends State<ShareScreen> {
                                             //   items.append(i);
                                             // },
 
-                                            CachedNetworkImage(
-                                              imageUrl: '${images[0]}',
-                                            ),
+                                            Image.network(
+                                                '${images[0]}', // this image may not exist
+                                                fit: BoxFit.fill)
                                           ],
                                         )
                                       : SizedBox(
