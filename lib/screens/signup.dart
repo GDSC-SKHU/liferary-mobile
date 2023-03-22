@@ -158,7 +158,15 @@ class _SignupScreenState extends State<SignupScreen> {
                   onTap: () {
                     if (password != repeatedPassword) {
                       fToast.showToast(child: Text('비밀번호를 확인주세요'));
-                    } else {
+                    }
+                    // else if (signinController.emailController == null) {
+                    //   fToast.showToast(child: Text('필수항목을 모두 입력해주세요.'));
+                    // } else if (signinController.nicknameController == null) {
+                    //   fToast.showToast(child: Text('필수항목을 모두 입력해주세요.'));
+                    // } else if (signinController.passwordController == null) {
+                    //   fToast.showToast(child: Text('필수항목을 모두 입력해주세요.'));
+                    // }
+                    else {
                       fToast.showToast(child: Text('회원가입에 성공했습니다.'));
                       signinController.signinUser();
                       Navigator.push(

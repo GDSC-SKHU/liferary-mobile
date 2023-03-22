@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:liferary/API/authController.dart';
 import 'package:liferary/FullView_category/fullview_button.dart';
 import 'package:liferary/FullView_category/fullview_firstline.dart';
 import 'package:liferary/FullView_category/fullview_fourthline.dart';
@@ -10,14 +8,12 @@ import 'package:liferary/FullView_category/fullview_thirdline.dart';
 import 'package:liferary/category/left_sentence.dart';
 import 'package:liferary/screens/Mypage.dart';
 import 'package:liferary/screens/login.dart';
+import 'package:liferary/screens/share_post.dart';
 import 'package:liferary/screens/share_write.dart';
 import 'package:liferary/utilities/palette.dart';
 import 'package:liferary/widgets/Prevoius_Next_Button.dart';
-import 'package:liferary/widgets/login_platform.dart';
-import 'package:liferary/widgets/main_posts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../category/select_value.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key});
@@ -33,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _logintoggle();
+    ValueManager.selectedValue = ValueManager.selectedValue;
   }
 
   Future<void> _logintoggle() async {
@@ -418,7 +415,31 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        Main_Postbox(), //메인 포스트들
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Palette.white,
+                            shape: CircleBorder(),
+                            side: BorderSide(
+                              color: Palette.blue,
+                              width: 2,
+                            ),
+                          ),
+                          child: Icon(
+                            Icons.create,
+                            size: _width * 0.09,
+                            color: Palette.blue4,
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ShareScreen(
+                                  id: 6,
+                                ),
+                              ),
+                            );
+                          },
+                        ), //메인 포스트들
                         SizedBox(
                           height: 10,
                         ),

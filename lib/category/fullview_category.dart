@@ -82,18 +82,6 @@ class _FullView_ModalState extends State<FullView_Modal> {
                               Category_firstfloor(),
                               cat_secondfloor(),
                               Category_nonsense(),
-
-                              // //Done button
-                              // ElevatedButton(
-                              //   style: ElevatedButton.styleFrom(
-                              //     backgroundColor: Palette.blue,
-                              //   ),
-                              //   child: Text(
-                              //     'Done!',
-                              //     style: TextStyle(color: Palette.white),
-                              //   ),
-                              //   onPressed: () => Navigator.pop(context),
-                              // ),
                             ],
                           ),
                         )

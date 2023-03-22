@@ -93,9 +93,8 @@ class SigninController {
   }
 }
 
+/**로그인 / 토큰관리 */
 class LoginController {
-  //로그인 클래스 & 토큰 관리
-
   static TextEditingController emailController =
       TextEditingController(); //usernameController
   static TextEditingController passwordController =
@@ -209,4 +208,45 @@ class User {
     data['nickname'] = this.nickname;
     return data;
   }
+}
+
+Future<getUserStatus> getUserId() async {
+  const url = 'http://api-liferary.duckdns.org/api/member/info';
+  final prefs = await SharedPreferences.getInstance();
+  final accessToken = prefs.getString('accessToken') ?? "";
+  // print("accessToken : ${accessToken}");
+  // http.Response response;
+
+  // String? token = await storage.read(key: accessToken);
+  // print("token : ${token}");
+  getUserStatus getStatus;
+
+  var response = await http.get(
+    Uri.parse(url),
+    headers: {'Authorization': 'Bearer ${accessToken}'},
+  );
+
+  if (response.statusCode == 200) {
+    // print('로그인 성공 정보 ${response.body}');
+    var data = json.decode(response.body);
+    getStatus = getUserStatus(email: data['email'], nickname: data['nickname']);
+    print('${response.body}');
+    return getStatus;
+  } else {
+    print('로그인 실패 : 정보 ${response.body}');
+
+    getStatus = getUserStatus(email: 'null', nickname: 'null');
+    print('${response.body}');
+    return getStatus;
+  }
+}
+
+class getUserStatus {
+  final String email; //user id
+  final String nickname; //user nicname
+
+  getUserStatus({
+    required this.email,
+    required this.nickname,
+  });
 }

@@ -1,13 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:liferary/API/authController.dart';
 import 'package:liferary/screens/home.dart';
 import 'package:liferary/screens/signup.dart';
 import 'package:liferary/utilities/palette.dart';
-import 'package:liferary/screens/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../widgets/login_platform.dart';
@@ -205,31 +203,6 @@ class _LoginScreenState extends State<LoginScreen> {
               }
             },
           ),
-
-          //회원가입하기 버튼
-          // Center(
-          //   child: ra,
-          // child: Container(
-          //   child: IconButton(
-          //     icon: Icon(
-          //       Icons.login_outlined,
-          //       color: Palette.white,
-          //     ),
-          //     onPressed: () async {
-          //       if (await authenticator.authentication(
-          //               userNameController.text, passwordController.text) ==
-          //           true) {
-          //         Navigator.pushNamed(context, "/home");
-          //       } else {
-          //         print("로그인 실패");
-          //       }
-          //     },
-          //   ),
-          //   decoration: BoxDecoration(
-          //       borderRadius: BorderRadius.circular(10.0),
-          //       color: Palette.darkGrey),
-          // ),
-          // )
         ]),
       ))),
     );

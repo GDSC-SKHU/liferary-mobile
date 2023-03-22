@@ -1,10 +1,10 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../category/select_value.dart';
 import 'authController.dart';
-import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,7 +28,7 @@ class getPostList {
   }
 }
 
-/**main post create */
+/**메인포스트 create */
 class WritePostController {
   final TextEditingController titleController =
       TextEditingController(); //titleController
@@ -85,24 +85,35 @@ class WritePostController {
   }
 }
 
-/**게시글 상세 정보 */
+// /**게시글 상세 정보 */
 class PostController {
-  static Future<PostModel> getUserPost(id) async {
+  static Future<PostModel> getUserPost(int id) async {
+    print("id = ${id}");
     String? token = await storage.read(key: 'Token');
-
-    var url = 'http://api-liferary.duckdns.org/api/main/${id}';
+    var prefs = await SharedPreferences.getInstance();
+    final url =
+        Uri.parse('http://api-liferary.duckdns.org/api/main/post?id=${id}');
+    // var url = 'http://api-liferary.duckdns.org/api/main/post';
     PostModel postModel;
 
     var response = await http.get(
-      Uri.parse(url),
+      url,
       headers: {
-        'Authorization': 'Bearer ${token}',
+        'Authorization': 'Bearer ${prefs.getString('accessToken')}',
         "Content-Type": "application/json",
         'Charset': 'utf-8',
       },
     );
 
     print('게시글 상세 : ${response.body}');
+    if (response.statusCode == 200) {
+      // Request successful
+      print("성공");
+    } else {
+      // Request failed
+      print("실패");
+      print(response.statusCode);
+    }
     var data = json.decode(utf8.decode(response.bodyBytes));
     postModel = PostModel(
       title: data['title'],
@@ -119,19 +130,21 @@ class PostController {
 
 /**게시글 상세 정보 모델 클래스 */
 class PostModel {
+  int? id;
   String? title;
-  String? nickname;
   String? author;
+  String? nickname;
   String? category;
   String? context;
-  List<String>? images;
+  List<dynamic>? images;
   String? video;
   String? modifiedDate;
 
   PostModel(
-      {this.title,
-      this.nickname,
+      {this.id,
+      this.title,
       this.author,
+      this.nickname,
       this.category,
       this.context,
       this.images,
@@ -141,12 +154,12 @@ class PostModel {
 
 /**게시글 리스트 */
 Future<PostList> listPost(number) async {
-  var url = 'http://api-liferary.duckdns.org/api/main/page/${number}';
+  var url = 'http://api-liferary.duckdns.org/api/main/page/all';
 
   String? token = await storage.read(key: 'Token');
 
   var response = await http.get(
-    Uri.parse(url),
+    Uri.parse(url + "?page=${number}"),
     headers: {'Authorization': 'Bearer ${token}'},
   );
   if (response.statusCode == 200) {
@@ -189,6 +202,7 @@ class PostList {
   }
 }
 
+/**댓글 */
 class Content {
   String? title;
   String? nickname;
