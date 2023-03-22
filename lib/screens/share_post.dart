@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:liferary/utilities/palette.dart';
 import '../API/authController.dart';
 import '../API/postController.dart';
+import '../POST/POST_read/post_vote.dart';
 import '../Styles/ColorStyles.dart';
 import '../Styles/Styles.dart';
 import 'MyPage.dart';
@@ -30,6 +32,7 @@ class _ShareScreenState extends State<ShareScreen> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
+    List<String> items = [];
     return FutureBuilder(
       future: getUserId(),
       builder: (context, snapshot) {
@@ -47,6 +50,8 @@ class _ShareScreenState extends State<ShareScreen> {
                   var mainContext = snapshot.data!.context;
                   var user = snapshot.data!.author;
                   var nickName = snapshot.data!.nickname;
+                  var images = snapshot.data!.images;
+                  // images = (map['categories'] as List)?.map((item) => item as String)?.toList();
 
                   var userToken = storage.read(key: 'Token');
 
@@ -227,27 +232,89 @@ class _ShareScreenState extends State<ShareScreen> {
                                       )
                                     ],
                                   ),
-                                  Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.9,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(15),
-                                        border: Border.all(
-                                          width: 1,
-                                          color: ColorStyle.mainColor,
+                                  /*
+                    Title Part
+                    */
+                                  Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Container(
+                                        width: _width * 0.8,
+                                        height: _height * 0.04,
+                                        decoration: BoxDecoration(
+                                          color: Palette.blue,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
                                         ),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Text(
+                                        child: Center(
+                                          child: Text(
                                             '$title',
-                                            style: Styles.postHeaderText,
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Palette.white),
                                           ),
-                                        ],
-                                      )),
+                                        )),
+                                  ),
+
+                                  /**본문내용 시작 :  First Picture*/
+                                  images!.isNotEmpty
+                                      ? Column(
+                                          children: [
+                                            Text("images의 값 : ${images[0]}"),
+                                            // items.addAll(images.toString() as Iterable<String>)
+                                            // for (var i in images) {
+                                            //   items.append(i);
+                                            // },
+
+                                            CachedNetworkImage(
+                                              imageUrl: '${images[0]}',
+                                            ),
+                                          ],
+                                        )
+                                      : SizedBox(
+                                          height: 5,
+                                        ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  /**본문 내용 */
+                                  Container(
+                                    width: _width * 0.8,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 10, 0, 0),
+                                            child: Text(
+                                              "${mainContext}",
+                                              style: TextStyle(
+                                                color: Palette.black,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            )),
+                                      ],
+                                    ),
+                                  ),
                                   SizedBox(
                                     height: 10,
                                   ),
+                                  /**본문 종료 이후 하단 툴 시작**/
+                                  //vote part
+                                  POST_vote(),
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      //study part
+                                      //community part
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                    ],
+                                  )
                                 ]),
                           ),
                         ),

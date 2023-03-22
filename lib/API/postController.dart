@@ -30,19 +30,19 @@ class getPostList {
 
 /**메인포스트 create */
 class WritePostController {
-  final TextEditingController titleController =
+  static TextEditingController titleController =
       TextEditingController(); //titleController
-  final TextEditingController categoryController =
+  static TextEditingController categoryController =
       TextEditingController(); //categoryController
-  final TextEditingController contextController =
+  static TextEditingController contextController =
       TextEditingController(); //contextController
-  final TextEditingController imagesController =
+  static TextEditingController imagesController =
       TextEditingController(); //imagesController
-  final TextEditingController videoController =
+  static TextEditingController videoController =
       TextEditingController(); //videoController
-  FilePickerResult selectedFile = new FilePickerResult([]);
+  static FilePickerResult selectedFile = new FilePickerResult([]);
 
-  postWrite() async {
+  static postWrite() async {
     const url = 'http://api-liferary.duckdns.org/api/main/new';
     var prefs = await SharedPreferences.getInstance();
     Map<String, String> headers = {

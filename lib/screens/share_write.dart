@@ -17,17 +17,16 @@ class Share_writeScreen extends StatefulWidget {
 
 class _Share_writeScreenState extends State<Share_writeScreen> {
   final SearchController = TextEditingController();
-  final TextEditingController titleController = TextEditingController();
-  // writePostController class >
-  final _writePostController = WritePostController();
-  WritePostController _postWrite = WritePostController();
+  // final TextEditingController titleController = TextEditingController();
+  // final _writePostController = WritePostController();
+  // WritePostController _postWrite = WritePostController();
   void getFile() async {
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(allowMultiple: true);
 
     if (result != null) {
       print(result.names);
-      _writePostController.selectedFile = result;
+      WritePostController.selectedFile = result;
       // 파일 사용하기
     } else {
       // 취소 버튼을 눌렀을 때 처리할 코드 작성
@@ -42,7 +41,7 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
 
   @override
   void dispose() {
-    _writePostController.titleController.text;
+    WritePostController.titleController.text;
     //_writePostController.contextController.text;
     super.dispose();
   }
@@ -200,7 +199,7 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                               border: Border.all(color: Palette.blue, width: 2),
                             ),
                             child: TextField(
-                              controller: _writePostController.titleController,
+                              controller: WritePostController.titleController,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Please enter your title.',
@@ -222,8 +221,7 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                               border: Border.all(color: Palette.blue, width: 2),
                             ),
                             child: TextField(
-                              controller:
-                                  _writePostController.contextController,
+                              controller: WritePostController.contextController,
                               textAlign: TextAlign.left,
                               autofocus: true,
                               decoration: InputDecoration(
@@ -334,8 +332,8 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                                   ),
                                 ),
                                 onTap: () {
-                                  _postWrite.postWrite();
-                                  print(_writePostController
+                                  WritePostController.postWrite();
+                                  print(WritePostController
                                       .contextController.text
                                       .toString());
                                   Navigator.push(
