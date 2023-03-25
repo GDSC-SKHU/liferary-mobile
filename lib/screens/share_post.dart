@@ -222,7 +222,7 @@ class _ShareScreenState extends State<ShareScreen> {
                                             Text(
                                               "Tag : ",
                                               style: TextStyle(
-                                                color: Palette.blue4,
+                                                color: Palette.blue,
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -332,6 +332,9 @@ class _ShareScreenState extends State<ShareScreen> {
                                       )
                                     ],
                                   ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
                                   Container(
                                     width: _width * 0.95,
                                     height: 3,
@@ -340,27 +343,46 @@ class _ShareScreenState extends State<ShareScreen> {
                                   SizedBox(
                                     height: 20,
                                   ),
-                                  /*
-                    Title Part
-                    */
-                                  Padding(
-                                    padding: const EdgeInsets.all(15.0),
-                                    child: Container(
-                                        width: _width * 0.8,
-                                        height: _height * 0.04,
-                                        decoration: BoxDecoration(
-                                          color: Palette.blue,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
+                                  /**Title 파트 */
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Title : ',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Palette.blue,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          '$title',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              color: Palette.black,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                        child: Center(
-                                          child: Text(
-                                            '$title',
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                color: Palette.white),
-                                          ),
-                                        )),
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  Container(
+                                    width: _width * 0.95,
+                                    height: 3,
+                                    color: Palette.blue3,
+                                  ),
+                                  SizedBox(
+                                    height: 50,
                                   ),
 
                                   /**본문내용 시작 :  First Picture*/
@@ -400,13 +422,16 @@ class _ShareScreenState extends State<ShareScreen> {
                                             ),
                                           ),
                                         ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
                                   Container(
                                     width: _width * 0.95,
                                     height: 3,
                                     color: Palette.blue3,
                                   ),
                                   SizedBox(
-                                    height: 50,
+                                    height: 30,
                                   ),
                                   /**본문 내용 */
                                   Container(
@@ -415,17 +440,22 @@ class _ShareScreenState extends State<ShareScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 10, 0, 0),
-                                            child: Text(
-                                              "${mainContext}",
-                                              style: TextStyle(
-                                                color: Palette.black,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            )),
+                                        Text(
+                                          "Content : ",
+                                          style: TextStyle(
+                                            color: Palette.blue,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          "${mainContext}",
+                                          style: TextStyle(
+                                            color: Palette.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        )
                                       ],
                                     ),
                                   ),

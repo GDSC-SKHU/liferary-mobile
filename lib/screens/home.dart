@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:liferary/FullView_category/fullview_button.dart';
 import 'package:liferary/FullView_category/fullview_firstline.dart';
@@ -23,19 +22,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  // Future<PostList> postListView = listPost(0);
+  // var postNumber = 0;
   final SearchController = TextEditingController();
   bool hasAccessToken = false;
   @override
   void initState() {
     super.initState();
     _logintoggle();
-    ValueManager.selectedValue = ValueManager.selectedValue;
   }
+
+  // Future<void> SelectCategory() async {
+  //   final select_c = await
+  // }
 
   Future<void> _logintoggle() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       hasAccessToken = prefs.getBool('hasAccessToken') ?? false;
+      ValueManager.selectedValue = ValueManager.selectedValue;
     });
   }
 
@@ -48,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // var postLast;
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -403,7 +409,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => ShareScreen(
-                                  id: 4,
+                                  id: 6,
                                 ),
                               ),
                             );

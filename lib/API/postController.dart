@@ -559,7 +559,7 @@ Future<void> deletePost(id) async {
   var response = await http.delete(
     Uri.parse(url),
     headers: {
-      "accept": "application/json",
+      'accept': 'application/json',
       'Authorization': 'Bearer ${accessToken}'
     },
   );
