@@ -21,6 +21,9 @@ class _POST_voteState extends State<POST_vote> {
       padding: const EdgeInsets.all(15.0),
       child: Column(
         children: [
+          SizedBox(
+            height: 50,
+          ),
           Container(
             alignment: Alignment.center,
             width: _width * 0.7,

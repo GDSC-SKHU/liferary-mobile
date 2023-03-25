@@ -27,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
     if (googleUser != null) {
+      print(googleUser);
       print('email = ${googleUser.email}');
       print('nickname = ${googleUser.displayName}');
       // print('id = ${googleUser.id}');

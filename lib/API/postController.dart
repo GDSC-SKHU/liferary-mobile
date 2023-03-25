@@ -1,14 +1,17 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:ffi';
+import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import '../category/select_value.dart';
 import 'authController.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/**post 조회 */
+/**post 리스트 조회 */
 class getPostList {
   Future getPost() async {
     const url = 'http://api-liferary.duckdns.org/api/main';
@@ -41,6 +44,11 @@ class WritePostController {
   static TextEditingController videoController =
       TextEditingController(); //videoController
   static FilePickerResult selectedFile = new FilePickerResult([]);
+  // static ImagePicker _picker = ImagePicker();
+
+  // static Imagepicker() async {
+  //   final List<XFile>? images = await _picker.pickMultiImage();
+  // }
 
   static postWrite() async {
     const url = 'http://api-liferary.duckdns.org/api/main/new';
@@ -67,7 +75,7 @@ class WritePostController {
           'images', selectedFile.files[i].path!,
           contentType: MediaType('image', 'png'));
       request.files.add(file);
-      print(file.contentType);
+      // print(file.contentType);
     }
 
     // Send the request
@@ -85,15 +93,75 @@ class WritePostController {
   }
 }
 
+/**!!!메인게시글 수정!!! */
+class MainPost_UpdateController {
+  static TextEditingController mainupdatetitleController =
+      TextEditingController(); //titleController
+  static TextEditingController mainupdatecategoryController =
+      TextEditingController(); //categoryController
+  static TextEditingController mainupdatecontextController =
+      TextEditingController(); //contextController
+  static TextEditingController mainupdateimagesController =
+      TextEditingController(); //imagesController
+  static TextEditingController mainupdatevideoController =
+      TextEditingController(); //videoController
+  static TextEditingController mainupdateimageController =
+      TextEditingController(); //videoController
+  static FilePickerResult updateselectedFile = new FilePickerResult([]);
+  static Future mainPostPath(id, author) async {
+    var url = 'http://api-liferary.duckdns.org/api/main/post?id=${id}';
+    final prefs = await SharedPreferences.getInstance();
+    final accessToken = prefs.getString('accessToken') ?? "";
+    Map<String, String> headers = {
+      "accept": "application/json",
+      'Authorization': 'Bearer ${prefs.getString('accessToken')}',
+      "Content-Type": "multipart/form-data",
+    };
+    Map<String, String> data = {
+      "title": mainupdatetitleController.text,
+      "category": ValueManager.selectedValue,
+      "context": mainupdatecontextController.text,
+      "video": "videoController.text"
+    };
+    http.MultipartRequest request =
+        http.MultipartRequest('POST', Uri.parse(url));
+    request.headers.addAll(headers);
+    request.fields.addAll(data);
+
+    for (var i = 0; i < updateselectedFile.count; i++) {
+      var file = await http.MultipartFile.fromPath(
+          'images', updateselectedFile.files[i].path!,
+          contentType: MediaType('image', 'png'));
+      request.files.add(file);
+      // print("지금 여기 : ${file.contentType}");
+      //ex image/png 와 같은 것을 출력
+    }
+
+    // Send the request
+    http.StreamedResponse response = await request.send();
+
+    // Handle the response
+    if (response.statusCode == 200) {
+      // Request successful
+      print("await response 시작 : ");
+      print(await response.stream.bytesToString());
+      print("현재 body : ${request.fields}");
+    } else {
+      // Request failed
+      print("수정실패 : ");
+      print(response.statusCode);
+    }
+  }
+}
+
 // /**게시글 상세 정보 */
 class PostController {
   static Future<PostModel> getUserPost(int id) async {
     print("id = ${id}");
-    String? token = await storage.read(key: 'Token');
     var prefs = await SharedPreferences.getInstance();
     final url =
         Uri.parse('http://api-liferary.duckdns.org/api/main/post?id=${id}');
-    // var url = 'http://api-liferary.duckdns.org/api/main/post';
+
     PostModel postModel;
 
     var response = await http.get(
@@ -105,7 +173,7 @@ class PostController {
       },
     );
 
-    print('게시글 상세 : ${response.body}');
+    print('게시글 단건조회 post컨트롤러 : ${response.body}');
     if (response.statusCode == 200) {
       // Request successful
       print("성공");
@@ -237,7 +305,6 @@ class Content {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-
     data['title'] = this.title;
     data['nickname'] = this.nickname;
     data['category'] = this.category;
@@ -483,83 +550,78 @@ Future<PostList> listTypePost(ctg, postNum) async {
 
 /**게시글 삭제 */
 Future<void> deletePost(id) async {
-  var url = 'http://moida-skhu.duckdns.org/post/${id}';
+  var url = 'http://api-liferary.duckdns.org/api/main/post?id=${id}';
+  final prefs = await SharedPreferences.getInstance();
+  final accessToken = prefs.getString('accessToken') ?? "";
 
-  String? token = await storage.read(key: 'Token');
+  // String? token = await storage.read(key: 'Token');
 
   var response = await http.delete(
     Uri.parse(url),
-    headers: {'Authorization': 'Bearer ${token}'},
+    headers: {
+      "accept": "application/json",
+      'Authorization': 'Bearer ${accessToken}'
+    },
   );
-  print(response.body);
+  if (response.statusCode == 200) {
+    print('삭제 성공 : ${response.body}');
+  } else {
+    print("삭제 실패 : ${response.body}");
+  }
 }
 
-/**게시글 수정 */
-Future<ModiPostModel> modifyPost(id) async {
-  var url = 'http://moida-skhu.duckdns.org/post/edit/${id}';
-
-  String? token = await storage.read(key: 'Token');
-  ModiPostModel modiPostModel;
+/**게시글 수정 get파트 */
+Future<MainPostModel_Update> LiferaryPost(id) async {
+  var url = 'http://api-liferary.duckdns.org/api/main/post?id=${id}';
+  final prefs = await SharedPreferences.getInstance();
+  final accessToken = prefs.getString('accessToken') ?? "";
+  MainPostModel_Update mainPostModel_Update;
 
   var response = await http.get(
     Uri.parse(url),
-    headers: {'Authorization': 'Bearer ${token}'},
+    headers: {
+      'Authorization': 'Bearer ${prefs.getString('accessToken')}',
+      "Content-Type": "application/json",
+      'Charset': 'utf-8',
+    },
   );
-  print('modify : ${response.body}');
+
   var data = json.decode(utf8.decode(response.bodyBytes));
-  modiPostModel = ModiPostModel(
-      author: data['author'],
+  mainPostModel_Update = MainPostModel_Update(
+      id: data['id'],
       title: data['title'],
-      type: data['type'],
+      author: data['author'],
+      nickname: data['nickname'],
+      category: data['category'],
       context: data['context'],
+      images: data['images'],
+      video: data['video'],
       modifiedDate: data['modifiedDate']);
-  return modiPostModel;
+  print('게시글 수정 후 get 파트 : ${mainPostModel_Update}');
+  return mainPostModel_Update;
 }
 
-class ModiPostModel {
-  final String title; //게시글 제목
-  final String type; //게시글 태그
-  final String context; //게시글 내용
-  final String author;
-  final String modifiedDate; //게시글 작성자
-  ModiPostModel(
-      {required this.title,
-      required this.type,
-      required this.context,
-      required this.author,
-      required this.modifiedDate});
-}
+class MainPostModel_Update {
+  int? id;
+  String? title;
+  String? author;
+  String? nickname;
+  String? category;
+  String? context;
+  List<dynamic>? images;
+  String? video;
+  String? modifiedDate;
 
-class modiPostController {
-  static TextEditingController modyTitleController =
-      TextEditingController(); //modyTitleController
-  static TextEditingController modyTypeController =
-      TextEditingController(); //modyTypeController
-  static TextEditingController modyContextController =
-      TextEditingController(); //modyContextController
-  static Future modiPostPath(id, author) async {
-    var url = 'http://moida-skhu.duckdns.org/post/edit/${id}';
-
-    String? token = await storage.read(key: 'Token');
-
-    var response = await http.patch(Uri.parse(url),
-        headers: {
-          'Authorization': 'Bearer ${token}',
-          "Content-Type": "application/json",
-          'Charset': 'utf-8',
-        },
-        body: jsonEncode({
-          "author": author,
-          "title": modyTitleController.text,
-          "type": modyTypeController.text,
-          "context": modyContextController.text
-        }));
-    if (response.statusCode == 200) {
-      print(response.body);
-    } else {
-      print(response.body);
-    }
-  }
+  MainPostModel_Update(
+      {this.id,
+      this.title,
+      this.author,
+      this.nickname,
+      this.category,
+      this.context,
+      this.images,
+      this.video,
+      this.modifiedDate});
 }
 
 /**댓글 수정 */
@@ -571,7 +633,7 @@ class modifyCommentsClass {
         'http://moida-skhu.duckdns.org/post/${postId}/comments/${commentId}';
 
     String? token = await storage.read(key: 'Token');
-    ModiPostModel modiPostModel;
+    MainPostModel_Update modiPostModel;
 
     var response = await http.patch(Uri.parse(url),
         headers: {

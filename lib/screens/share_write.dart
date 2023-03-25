@@ -313,7 +313,6 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                               padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                               child: GestureDetector(
                                 child: Container(
-                                  //comment
                                   width: _width * 0.4,
                                   height: _height * 0.05,
                                   decoration: BoxDecoration(

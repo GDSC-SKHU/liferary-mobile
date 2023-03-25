@@ -1,4 +1,11 @@
+import 'dart:async';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:liferary/POST/POST_read/Post_U_Screen.dart';
+import 'package:liferary/screens/home.dart';
+import 'package:liferary/widgets/toComentMove.dart';
+import 'package:liferary/widgets/toStudyMove.dart';
 import 'package:liferary/utilities/palette.dart';
 import '../API/authController.dart';
 import '../API/postController.dart';
@@ -31,12 +38,13 @@ class _ShareScreenState extends State<ShareScreen> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
-    List<String> items = [];
+
     return FutureBuilder(
       future: getUserId(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           var userId = snapshot.data!.email;
+          var nickname = snapshot.data!.nickname;
 
           return Container(
             height: double.infinity,
@@ -50,8 +58,15 @@ class _ShareScreenState extends State<ShareScreen> {
                   var user = snapshot.data!.author;
                   var nickName = snapshot.data!.nickname;
                   var images = snapshot.data!.images;
-                  // images = (map['categories'] as List)?.map((item) => item as String)?.toList();
+                  print("share_post에서 출력 / 현재 이미지 : ${images}");
 
+                  final List<String> strs =
+                      images!.map((e) => e.toString()).toList();
+                  // var i = strs[0];
+                  // print("${nickname}, ${nickName}");
+
+                  // images = (map['categories'] as List)?.map((item) => item as String)?.toList();
+                  // var image = snapshot.data!.;
                   var userToken = storage.read(key: 'Token');
 
                   return Scaffold(
@@ -194,6 +209,9 @@ class _ShareScreenState extends State<ShareScreen> {
                                   ]),
                                   Column(
                                     children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             10, 5, 0, 0),
@@ -226,10 +244,101 @@ class _ShareScreenState extends State<ShareScreen> {
                                                 ],
                                               ),
                                             ),
+                                            nickname == nickName
+                                                ? Container(
+                                                    child: Row(
+                                                    children: [
+                                                      IconButton(
+                                                          onPressed: (() {
+                                                            showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    ((context) {
+                                                                  return AlertDialog(
+                                                                    title: Text(
+                                                                        '게시글을 수정하시겠습니까?'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                          onPressed:
+                                                                              (() {
+                                                                            Navigator.push(
+                                                                                context,
+                                                                                MaterialPageRoute(
+                                                                                    builder: ((context) => PostUpdateScreen(
+                                                                                          id: widget.id,
+                                                                                        ))));
+                                                                          }),
+                                                                          child:
+                                                                              Text('수정')),
+                                                                      TextButton(
+                                                                          onPressed:
+                                                                              (() {
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                          child:
+                                                                              Text('취소'))
+                                                                    ],
+                                                                  );
+                                                                }));
+                                                          }),
+                                                          icon: Icon(
+                                                            Icons.edit,
+                                                            color:
+                                                                Palette.blue4,
+                                                          )),
+                                                      IconButton(
+                                                          onPressed: (() {
+                                                            showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder:
+                                                                    ((context) {
+                                                                  return AlertDialog(
+                                                                    title: Text(
+                                                                        '게시글을 삭제하시겠습니까?'),
+                                                                    actions: [
+                                                                      TextButton(
+                                                                          onPressed:
+                                                                              (() {
+                                                                            deletePost(widget.id);
+
+                                                                            Navigator.push(context,
+                                                                                MaterialPageRoute(builder: ((context) => HomeScreen())));
+                                                                          }),
+                                                                          child:
+                                                                              Text('삭제')),
+                                                                      TextButton(
+                                                                          onPressed:
+                                                                              (() {
+                                                                            Navigator.pop(context);
+                                                                          }),
+                                                                          child:
+                                                                              Text('취소'))
+                                                                    ],
+                                                                  );
+                                                                }));
+                                                          }),
+                                                          icon: Icon(
+                                                            Icons.delete,
+                                                            color:
+                                                                Palette.blue4,
+                                                          )),
+                                                    ],
+                                                  ))
+                                                : SizedBox(),
                                           ],
                                         ),
                                       )
                                     ],
+                                  ),
+                                  Container(
+                                    width: _width * 0.95,
+                                    height: 3,
+                                    color: Palette.blue3,
+                                  ),
+                                  SizedBox(
+                                    height: 20,
                                   ),
                                   /*
                     Title Part
@@ -255,25 +364,49 @@ class _ShareScreenState extends State<ShareScreen> {
                                   ),
 
                                   /**본문내용 시작 :  First Picture*/
-                                  images!.isNotEmpty
+                                  images.isNotEmpty
                                       ? Column(
                                           children: [
-                                            Text("images의 값 : ${images[0]}"),
+                                            // Text("images의 값 : ${strs[0]}"),
                                             // items.addAll(images.toString() as Iterable<String>)
                                             // for (var i in images) {
                                             //   items.append(i);
                                             // },
+                                            // Image.network(
+                                            //     '${items[0]}', // this image may not exist
+                                            //     fit: BoxFit.fill)
 
-                                            Image.network(
-                                                '${images[0]}', // this image may not exist
-                                                fit: BoxFit.fill)
+                                            CachedNetworkImage(
+                                              imageUrl: "${images[0]}",
+                                              fit: BoxFit.fill,
+                                              placeholder: (context, url) =>
+                                                  CircularProgressIndicator(
+                                                      strokeWidth: 2,
+                                                      color: Palette.white),
+                                              errorWidget:
+                                                  (context, url, error) => Icon(
+                                                      Icons.person,
+                                                      color: Palette.blue2),
+                                            )
                                           ],
                                         )
-                                      : SizedBox(
-                                          height: 5,
+                                      : Container(
+                                          width: _width * 0.4,
+                                          height: _height * 0.3,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/images/logo.png'),
+                                            ),
+                                          ),
                                         ),
+                                  Container(
+                                    width: _width * 0.95,
+                                    height: 3,
+                                    color: Palette.blue3,
+                                  ),
                                   SizedBox(
-                                    height: 30,
+                                    height: 50,
                                   ),
                                   /**본문 내용 */
                                   Container(
@@ -297,20 +430,30 @@ class _ShareScreenState extends State<ShareScreen> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 10,
+                                    height: 50,
                                   ),
-                                  /**본문 종료 이후 하단 툴 시작**/
-                                  //vote part
-                                  POST_vote(),
+                                  Container(
+                                    width: _width * 0.95,
+                                    height: 3,
+                                    color: Palette.blue3,
+                                  ),
+                                  SizedBox(
+                                    width: 500,
+                                  ),
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                        width: 10,
+                                        width: 25,
                                       ),
-                                      //study part
-                                      //community part
+                                      /**study part*/
+                                      toStudyMove(),
                                       SizedBox(
-                                        width: 10,
+                                        width: 60,
+                                      ),
+                                      toComentMove(),
+                                      SizedBox(
+                                        width: 25,
                                       ),
                                     ],
                                   )
@@ -321,55 +464,55 @@ class _ShareScreenState extends State<ShareScreen> {
                     ),
 
                     /**우측 하단 댓글 아이콘 파트*/
-                    floatingActionButton: FloatingActionButton(
-                      backgroundColor: ColorStyle.mainColor,
-                      child: Icon(Icons.message),
-                      onPressed: () => Navigator.pop(context),
-                      // {
-                      // showDialog(
-                      //     context: context,
-                      //     barrierDismissible: true,
-                      //     builder: (BuildContext context) {
-                      //       return AlertDialog(
-                      //         alignment: Alignment.center,
-                      //         title: Text("댓글 작성"),
-                      //         content: Column(
-                      //             mainAxisAlignment: MainAxisAlignment.center,
-                      //             mainAxisSize: MainAxisSize.min,
-                      //             children: [
-                      //               TextField(
-                      //                   controller:
-                      //                       PostComment.commentController,
-                      //                   decoration: InputDecoration(
-                      //                     border: InputBorder.none,
-                      //                     hintText: '댓글',
-                      //                     hintStyle: TextStyle(
-                      //                       color: Colors.black,
-                      //                     ),
-                      //                   ))
-                      //             ]),
-                      //         actions: [
-                      //           TextButton(
-                      //               onPressed: (() {
-                      //                 PostComment.commentWrite(widget.id);
-                      //                 Navigator.pop(context);
+                    // floatingActionButton: FloatingActionButton(
+                    //   backgroundColor: ColorStyle.mainColor,
+                    //   child: Icon(Icons.message),
+                    //   onPressed: () => Navigator.pop(context),
+                    //   // {
+                    //   // showDialog(
+                    //   //     context: context,
+                    //   //     barrierDismissible: true,
+                    //   //     builder: (BuildContext context) {
+                    //   //       return AlertDialog(
+                    //   //         alignment: Alignment.center,
+                    //   //         title: Text("댓글 작성"),
+                    //   //         content: Column(
+                    //   //             mainAxisAlignment: MainAxisAlignment.center,
+                    //   //             mainAxisSize: MainAxisSize.min,
+                    //   //             children: [
+                    //   //               TextField(
+                    //   //                   controller:
+                    //   //                       PostComment.commentController,
+                    //   //                   decoration: InputDecoration(
+                    //   //                     border: InputBorder.none,
+                    //   //                     hintText: '댓글',
+                    //   //                     hintStyle: TextStyle(
+                    //   //                       color: Colors.black,
+                    //   //                     ),
+                    //   //                   ))
+                    //   //             ]),
+                    //   //         actions: [
+                    //   //           TextButton(
+                    //   //               onPressed: (() {
+                    //   //                 PostComment.commentWrite(widget.id);
+                    //   //                 Navigator.pop(context);
 
-                      //                 setState(() {
-                      //                   print(widget.id);
-                      //                   psModel = PostController.getUserPost(
-                      //                       widget.id);
-                      //                 });
-                      //               }),
-                      //               child: Text(
-                      //                 '댓글 작성',
-                      //                 selectionColor: ColorStyle.mainColor,
-                      //               ))
-                      //         ],
-                      //       );
-                      //     });
-                      //   PostComment.commentController.clear();
-                      // },
-                    ),
+                    //   //                 setState(() {
+                    //   //                   print(widget.id);
+                    //   //                   psModel = PostController.getUserPost(
+                    //   //                       widget.id);
+                    //   //                 });
+                    //   //               }),
+                    //   //               child: Text(
+                    //   //                 '댓글 작성',
+                    //   //                 selectionColor: ColorStyle.mainColor,
+                    //   //               ))
+                    //   //         ],
+                    //   //       );
+                    //   //     });
+                    //   //   PostComment.commentController.clear();
+                    //   // },
+                    // ),
                   );
                 } else {
                   return Scaffold(

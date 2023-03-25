@@ -230,13 +230,11 @@ Future<getUserStatus> getUserId() async {
     // print('로그인 성공 정보 ${response.body}');
     var data = json.decode(response.body);
     getStatus = getUserStatus(email: data['email'], nickname: data['nickname']);
-    print('${response.body}');
+    // print('${response.body}');
     return getStatus;
   } else {
-    print('로그인 실패 : 정보 ${response.body}');
-
     getStatus = getUserStatus(email: 'null', nickname: 'null');
-    print('${response.body}');
+    print('로그인 실패 : 정보 ${response.body}');
     return getStatus;
   }
 }

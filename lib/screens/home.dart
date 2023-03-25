@@ -206,37 +206,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     },
                                   ),
                           ),
-                          //
-                          // Padding(
-                          //   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          //   child: InkWell(
-                          //     child: Center(
-                          //         child: Container(
-                          //             width: _width * 0.2,
-                          //             height: _height * 0.03,
-                          //             decoration: BoxDecoration(
-                          //               color: Palette.blue3,
-                          //               borderRadius: BorderRadius.circular(10),
-                          //             ),
-                          //             child: Center(
-                          //               child: Text(
-                          //                 "Logout",
-                          //                 style: TextStyle(
-                          //                     fontSize: 15,
-                          //                     color: Palette.white),
-                          //               ),
-                          //             ))),
-
-                          //     //Logout 버튼 클릭시 네비게이션 작동
-                          //     onTap: () {
-                          //       Navigator.push(
-                          //         context,
-                          //         MaterialPageRoute(
-                          //             builder: (context) => LoginScreen()),
-                          //       );
-                          //     },
-                          //   ),
-                          // ),
                         ],
                       )
                     ]),
@@ -441,7 +410,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         ), //메인 포스트들
                         SizedBox(
-                          height: 10,
+                          height: 6,
                         ),
                         /** */
                         Prevoius_Next_Button()
