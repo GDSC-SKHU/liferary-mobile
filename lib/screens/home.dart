@@ -1,9 +1,8 @@
+import 'dart:ffi';
 import 'package:flutter/material.dart';
+import 'package:liferary/API/postController.dart';
 import 'package:liferary/FullView_category/fullview_button.dart';
 import 'package:liferary/FullView_category/fullview_firstline.dart';
-import 'package:liferary/FullView_category/fullview_fourthline.dart';
-import 'package:liferary/FullView_category/fullview_secondline.dart';
-import 'package:liferary/FullView_category/fullview_thirdline.dart';
 import 'package:liferary/category/left_sentence.dart';
 import 'package:liferary/screens/Mypage.dart';
 import 'package:liferary/screens/login.dart';
@@ -40,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
       hasAccessToken = prefs.getBool('hasAccessToken') ?? false;
-      ValueManager.selectedValue = ValueManager.selectedValue;
+      var nickname = prefs.getString('nickname') ?? "";
     });
   }
 
@@ -57,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // var postLast;
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
+    // final nickname =
     return Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: Palette.white,
@@ -71,57 +71,73 @@ class _HomeScreenState extends State<HomeScreen> {
                       Column(children: [
                         //logo
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(12, 0, 20, 0),
-                              child: Container(
-                                width: _width * 0.4,
-                                height: _height * 0.04,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/images/logo.png'),
-                                  ),
+                            Container(
+                              color: Palette.blue,
+                              width: 10,
+                            ),
+                            Container(
+                              width: _width * 0.4,
+                              height: _height * 0.08,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage('assets/images/logo.png'),
                                 ),
                               ),
                             ),
+                            SizedBox(
+                              width: 20,
+                            ),
                             //welcome write
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                              child: Text(
-                                "Welcome,\nusername!",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Palette.blue,
+                            Column(
+                              children: [
+                                Text(
+                                  "Welcome,",
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      color: Palette.blue,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
+                                SizedBox(
+                                  height: 8,
+                                ),
+                                Text(
+                                  "username!",
+                                  style: TextStyle(
+                                      fontSize: 17,
+                                      color: Palette.blue,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
                             ),
                           ],
                         ),
                         SizedBox(
                           height: 8,
                         ),
-                        Container(
-                          width: _width * 0.74,
-                          height: _height * 0.05,
-                          decoration: BoxDecoration(
-                            color: Palette.white,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Palette.blue, width: 2),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 5, 5, 10),
-                            child: TextField(
-                              controller: SearchController,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                prefixIcon: Icon(Icons.search),
-                                iconColor: Palette.white,
-                                labelText: 'Search',
-                                labelStyle: TextStyle(color: Palette.blue),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Container(
+                        //   width: _width * 0.74,
+                        //   height: _height * 0.05,
+                        //   decoration: BoxDecoration(
+                        //     color: Palette.white,
+                        //     borderRadius: BorderRadius.circular(10),
+                        //     border: Border.all(color: Palette.blue, width: 2),
+                        //   ),
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.fromLTRB(10, 5, 5, 10),
+                        //     child: TextField(
+                        //       controller: SearchController,
+                        //       decoration: InputDecoration(
+                        //         border: InputBorder.none,
+                        //         prefixIcon: Icon(Icons.search),
+                        //         iconColor: Palette.white,
+                        //         labelText: 'Search',
+                        //         labelStyle: TextStyle(color: Palette.blue),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ]),
                       SizedBox(
                         width: 10,
@@ -171,8 +187,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     color: Palette.white),
                                               ),
                                             ))),
-
-                                    //Logout 버튼 클릭시 네비게이션 작동
                                     onTap: () {
                                       _logout();
                                       Navigator.push(
@@ -222,15 +236,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         //박스 시작
                         Container(
                           width: _width * 1,
-                          height: _height * 0.65,
+                          height: _height * 0.35,
                           color: Palette.blue,
                           child: Column(children: [
-                            Container(
-                              width: _width * 0.9,
-                              // color: Palette.black,
-                              child: Column(
-                                children: [Left_sentence()],
-                              ),
+                            SizedBox(
+                              height: 20,
                             ),
 
                             //하단
@@ -240,78 +250,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Column(
                                   children: [
                                     //choose part
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 10, 0, 5),
-                                      child: Container(
-                                          width: _width * 0.75,
-                                          height: _height * 0.04,
-                                          decoration: BoxDecoration(
-                                            color: Palette.blue3,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              "Choose your category!",
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Palette.white),
-                                            ),
-                                          )),
+                                    Text(
+                                      "What kind of knowledge do you want to know?",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Palette.white,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                     SizedBox(
-                                      height: 10,
+                                      height: 20,
+                                    ),
+                                    Container(
+                                      width: _width * 0.95,
+                                      height: 2,
+                                      color: Palette.white,
+                                    ),
+                                    SizedBox(
+                                      height: 20,
                                     ),
 
                                     //white box
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                      child: Container(
-                                        width: _width * 0.9,
-                                        height: _height * 0.34,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                            border: Border.all(
-                                                width: 1, color: Palette.white),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.white,
-                                                  blurRadius: 2.0,
-                                                  spreadRadius: 1.0,
-                                                  offset: Offset(
-                                                    1,
-                                                    1,
-                                                  )),
-                                            ]),
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              5, 20, 0, 0),
-                                          child: Column(
-                                            children: [
-                                              FullView_firstline(),
-                                              FullView_secondline(),
-                                              FullView_thirdline(),
-                                              FullView_fourthline(),
-                                              SizedBox(
-                                                height: 30,
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  FullView_Button(),
-                                                  SizedBox(
-                                                    width: 20,
-                                                  )
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                    Column(
+                                      children: [
+                                        FullView_firstline(),
+                                        // FullView_Button(),
+                                      ],
                                     ),
                                   ],
                                 ),
@@ -322,42 +285,42 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         Row(
                           children: [
-                            Padding(
-                              //selected part
-                              padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
-                              child: Container(
-                                alignment: Alignment.centerLeft,
-                                width: _width * 0.8,
-                                height: _height * 0.045,
-                                decoration: BoxDecoration(
-                                  color: Palette.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  border:
-                                      Border.all(color: Palette.blue, width: 2),
-                                ),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "Selected : ",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Palette.blue3,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      "${ValueManager.selectedValue}",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Palette.blue4,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   //selected part
+                            //   padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
+                            //   child: Container(
+                            //     alignment: Alignment.centerLeft,
+                            //     width: _width * 0.8,
+                            //     height: _height * 0.045,
+                            //     decoration: BoxDecoration(
+                            //       color: Palette.white,
+                            //       borderRadius: BorderRadius.circular(10),
+                            //       border:
+                            //           Border.all(color: Palette.blue, width: 2),
+                            //     ),
+                            //     child: Row(
+                            //       children: [
+                            //         SizedBox(
+                            //           width: 10,
+                            //         ),
+                            //         Text(
+                            //           "Selected : ",
+                            //           style: TextStyle(
+                            //               fontSize: 18,
+                            //               color: Palette.blue3,
+                            //               fontWeight: FontWeight.bold),
+                            //         ),
+                            //         Text(
+                            //           "${ValueManager.selectedValue}",
+                            //           style: TextStyle(
+                            //               fontSize: 18,
+                            //               color: Palette.blue4,
+                            //               fontWeight: FontWeight.bold),
+                            //         ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
                               child: hasAccessToken == true

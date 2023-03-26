@@ -18,7 +18,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  LoginController loginController = LoginController();
   late FToast fToast;
   LoginPlatform _loginPlatform = LoginPlatform.none;
   GoogleSignInAccount? googleUser = null;
@@ -59,7 +58,15 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
     fToast = FToast();
     fToast.init(context);
-    loginController;
+    _LoginClear();
+  }
+
+  Future<void> _LoginClear() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      LoginController.emailController.clear();
+      LoginController.passwordController.clear();
+    });
   }
 
   @override
