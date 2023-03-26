@@ -44,11 +44,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  Future<void> _incrementCounter() async {
+  Future<void> _logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      prefs.setBool('hasAccessToken', false);
+      prefs.clear();
     });
+    print(hasAccessToken);
   }
 
   @override
@@ -173,7 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                     //Logout 버튼 클릭시 네비게이션 작동
                                     onTap: () {
-                                      _incrementCounter();
+                                      _logout();
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -200,8 +201,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     color: Palette.white),
                                               ),
                                             ))),
-
-                                    //Logout 버튼 클릭시 네비게이션 작동
                                     onTap: () {
                                       Navigator.push(
                                         context,
