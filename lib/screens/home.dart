@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:liferary/FullView_category/fullview_firstline.dart';
+import 'package:liferary/Styles/ColorStyles.dart';
 import 'package:liferary/screens/Mypage.dart';
 import 'package:liferary/screens/login.dart';
 import 'package:liferary/screens/share_write.dart';
@@ -7,6 +8,21 @@ import 'package:liferary/utilities/palette.dart';
 import 'package:liferary/widgets/Prevoius_Next_Button.dart';
 import 'package:liferary/widgets/main_posts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
+final bearItem = {
+  "list": [
+    {"image": "assets/images/img_blue.png", "name": "파랑이"},
+    {"image": "assets/images/img_mint.png", "name": "민트트"},
+    {"image": "assets/images/img_skyblue.png", "name": "하늘이"},
+    {"image": "assets/images/img_white.png", "name": "하양이"},
+    {"image": "assets/images/img_pink.png", "name": "분홍이"},
+    {"image": "assets/images/img_yellow.png", "name": "노랑이"},
+    {"image": "assets/images/img_purple.png", "name": "보라라"},
+    {"image": "assets/images/img_mix.png", "name": "믹스스"}
+  ]
+};
+// BearList? bearList;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key});
@@ -50,11 +66,272 @@ class _HomeScreenState extends State<HomeScreen> {
   String inputText = '';
   @override
   Widget build(BuildContext context) {
+    // bearList = BearList.fromJson(bearItem);
     // var postLast;
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     // final nickname =
     return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          elevation: 0.0,
+          title: Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+          actions: [
+            hasAccessToken == true
+                ? Row(
+                    children: [
+                      Text(
+                        "yaho0919",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Palette.blue,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.login),
+                        onPressed: () => {
+                          _logout(),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HomeScreen()),
+                          )
+                        },
+                      ),
+                    ],
+                  )
+                : Row(
+                    children: [
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Login",
+                        style: TextStyle(
+                            fontSize: 14,
+                            color: Palette.blue,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.logout),
+                        onPressed: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginScreen()),
+                          )
+                        },
+                      ),
+                    ],
+                  )
+          ],
+        ),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero, // 여백은 필요 없다.
+            children: [
+              UserAccountsDrawerHeader(
+                accountName: Text("yaho0919"),
+                accountEmail: Text("yaho0919@gmail.com"),
+                currentAccountPicture: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  backgroundImage: AssetImage('assets/images/logo.png'),
+                ),
+                otherAccountsPictures: [
+                  //중복 동그라미 생성 테스트
+                  // CircleAvatar(
+                  //   backgroundColor: Colors.black,
+                  //   backgroundImage: AssetImage('assets/images/logo.png'),
+                  // ),
+                ],
+                onDetailsPressed: () => {
+                  // 더보기 화살표를 구현
+                  print("clicked")
+                },
+                decoration: BoxDecoration(
+                    color: Palette.blue2,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(0.0),
+                      bottomRight: Radius.circular(0.0),
+                    )), // 빨간 부분을 꾸미기 위한 기능
+              ),
+              /**탭바로 내리기로함 */
+              // Container(
+              //   height: 30,
+              //   child: ElevatedButton(
+              //     style: ElevatedButton.styleFrom(
+              //       backgroundColor: Palette.white,
+              //       shape: CircleBorder(),
+              //       side: BorderSide(
+              //         color: Palette.blue,
+              //         width: 1.5,
+              //       ),
+              //     ),
+              //     child: Icon(
+              //       Icons.create,
+              //       size: _width * 0.06,
+              //       color: Palette.blue4,
+              //     ),
+              //     onPressed: () {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //           builder: (context) => Share_writeScreen(),
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
+              Column(
+                children: [
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Text(
+                        "Choose a category",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Palette.blue,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Icon(
+                        Icons.task_alt,
+                        color: Palette.blue,
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  // Container(
+                  //   height: 1,
+                  //   color: Palette.blue,
+                  // ),
+                ],
+              ),
+
+              ListTile(
+                leading: Icon(
+                  Icons.soup_kitchen,
+                  color: Colors.grey[850],
+                ), // 화면의 첫 부분
+                title: Text("cooking"),
+                onTap: () => {print("home!!")},
+                // trailing: Icon(Icons.add), // 화면의 끝 부분
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.fitness_center,
+                  color: Colors.grey[850],
+                ), // 화면의 첫 부분
+                title: Text("fitness"),
+                onTap: () => {print("home!!")},
+                // trailing: Icon(Icons.add), // 화면의 끝 부분
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.mood,
+                  color: Colors.grey[850],
+                ), // 화면의 첫 부분
+                title: Text("nonsense"),
+                onTap: () => {print("home!!")},
+                // trailing: Icon(Icons.add), // 화면의 끝 부분
+              ),
+              //여기까지 3개
+              ListTile(
+                leading: Icon(
+                  Icons.share,
+                  color: Colors.grey[850],
+                ), // 화면의 첫 부분
+                title: Text("relationship"),
+                onTap: () => {print("home!!")},
+                // trailing: Icon(Icons.add), // 화면의 끝 부분
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.terminal,
+                  color: Colors.grey[850],
+                ), // 화면의 첫 부분
+                title: Text("programming"),
+                onTap: () => {print("home!!")},
+                // trailing: Icon(Icons.add), // 화면의 끝 부분
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.language,
+                  color: Colors.grey[850],
+                ), // 화면의 첫 부분
+                title: Text("language"),
+                onTap: () => {print("home!!")},
+                // trailing: Icon(Icons.add), // 화면의 끝 부분
+              ),
+              //6개
+              ListTile(
+                leading: Icon(
+                  Icons.brush,
+                  color: Colors.grey[850],
+                ), // 화면의 첫 부분
+                title: Text("makeup"),
+                onTap: () => {print("home!!")},
+                // trailing: Icon(Icons.add), // 화면의 끝 부분
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.headphones,
+                  color: Colors.grey[850],
+                ), // 화면의 첫 부분
+                title: Text("music"),
+                onTap: () => {print("home!!")},
+                // trailing: Icon(Icons.add), // 화면의 끝 부분
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.checkroom,
+                  color: Colors.grey[850],
+                ), // 화면의 첫 부분
+                title: Text("fashion"),
+                onTap: () => {print("home!!")},
+                // trailing: Icon(Icons.add), // 화면의 끝 부분
+              ),
+              //9개
+              ListTile(
+                leading: Icon(
+                  Icons.sports_esports,
+                  color: Colors.grey[850],
+                ), // 화면의 첫 부분
+                title: Text("leisure"),
+                onTap: () => {print("home!!")},
+                // trailing: Icon(Icons.add), // 화면의 끝 부분
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.flight_takeoff,
+                  color: Colors.grey[850],
+                ), // 화면의 첫 부분
+                title: Text("travel"),
+                onTap: () => {print("home!!")},
+                // trailing: Icon(Icons.add), // 화면의 끝 부분
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.more,
+                  color: Colors.grey[850],
+                ), // 화면의 첫 부분
+                title: Text("etc..."),
+                onTap: () => {print("home!!")},
+                // trailing: Icon(Icons.add), // 화면의 끝 부분
+              ),
+            ],
+          ),
+        ),
         resizeToAvoidBottomInset: true,
         backgroundColor: Palette.white,
         // appBar: AppBar(automaticallyImplyLeading: false),
@@ -64,140 +341,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 child: Column(
                   children: [
-                    Row(children: [
-                      Column(children: [
-                        //logo
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              color: Palette.blue,
-                              width: 10,
-                            ),
-                            Container(
-                              width: _width * 0.4,
-                              height: _height * 0.08,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/images/logo.png'),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            //welcome write
-                            Column(
-                              children: [
-                                Text(
-                                  "Welcome,",
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      color: Palette.blue,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
-                                  "username!",
-                                  style: TextStyle(
-                                      fontSize: 17,
-                                      color: Palette.blue,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 8,
-                        ),
-                      ]),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Palette.blue3,
-                            ),
-                            child: Icon(
-                              Icons.person,
-                              size: _width * 0.1,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => MyPage()),
-                              );
-                            },
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-
-                          //Logout button
-                          hasAccessToken == true
-                              ? InkWell(
-                                  child: Center(
-                                      child: Container(
-                                          width: _width * 0.2,
-                                          height: _height * 0.03,
-                                          decoration: BoxDecoration(
-                                            color: Palette.blue3,
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              "Logout",
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: Palette.white),
-                                            ),
-                                          ))),
-                                  onTap: () {
-                                    _logout();
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HomeScreen()),
-                                    );
-                                  },
-                                )
-                              /**hasaccessToken */
-                              : InkWell(
-                                  child: Container(
-                                      width: _width * 0.2,
-                                      height: _height * 0.03,
-                                      decoration: BoxDecoration(
-                                        color: Palette.blue3,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "Login",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Palette.white),
-                                        ),
-                                      )),
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => LoginScreen()),
-                                    );
-                                  },
-                                ),
-                        ],
-                      )
-                    ]),
                     SizedBox(
                       height: 10,
                     ),
@@ -253,7 +396,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           ]),
                         ), //mypage box end//
                         SizedBox(
-                          height: 10,
+                          height: 30,
+                        ),
+                        Text(
+                          "More knowledge with more people to share",
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: ColorStyle.mainColor,
+                              fontWeight: FontWeight.normal),
+                        ),
+                        SizedBox(
+                          height: 15,
                         ),
                         GestureDetector(
                           //여백 눌렀을 때 키보드 사라지게 하기.
@@ -266,14 +419,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Padding(
                                   padding:
-                                      EdgeInsets.fromLTRB(10.0, 0.0, 5.0, 0.0),
+                                      EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
                                   child: SizedBox(
-                                    width: _width * 0.78,
+                                    width: _width * 0.93,
                                     height: _height * 0.05,
                                     child: TextField(
                                       controller: inputController,
                                       decoration: InputDecoration(
-                                        labelText: 'Search',
                                         hintText: 'Search what you want!',
                                         labelStyle:
                                             TextStyle(color: Palette.blue),
@@ -298,19 +450,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                 ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      inputText = inputController.text;
-                                    });
-                                  },
-                                  child: Image(
-                                    image:
-                                        AssetImage('assets/images/shuttle.png'),
-                                    width: _width * 0.08,
-                                    color: Palette.blue,
-                                  ),
-                                ),
+                                // ElevatedButton(
+                                //   onPressed: () {
+                                //     setState(() {
+                                //       inputText = inputController.text;
+                                //     });
+                                //   },
+                                //   child: Image(
+                                //     image:
+                                //         AssetImage('assets/images/shuttle.png'),
+                                //     width: _width * 0.08,
+                                //     color: Palette.blue,
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
@@ -353,6 +505,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               )
                             : SizedBox(),
+                        SizedBox(
+                          height: 30,
+                        ),
                         // ElevatedButton(
                         //   style: ElevatedButton.styleFrom(
                         //     backgroundColor: Palette.white,
