@@ -8,6 +8,7 @@ class Palette {
   static const blue3 = Color(0xffA0C3FD);
   static const blue4 = Color(0xff4285F4);
   static const blue5 = Color(0xff2A75F3);
+  static const primaryTextColor = const Color(0xFF414C6B);
 
   static const black = Color(0xff3C3C3C);
 

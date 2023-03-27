@@ -1,3 +1,4 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:liferary/FullView_category/fullview_firstline.dart';
 import 'package:liferary/Styles/ColorStyles.dart';
@@ -9,6 +10,10 @@ import 'package:liferary/widgets/Prevoius_Next_Button.dart';
 import 'package:liferary/widgets/main_posts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+
+import '../model/planet_info.dart';
+import '../pages/details_page.dart';
+import '../widgets/card.dart';
 
 final bearItem = {
   "list": [
@@ -66,11 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String inputText = '';
   @override
   Widget build(BuildContext context) {
-    // bearList = BearList.fromJson(bearItem);
-    // var postLast;
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
-    // final nickname =
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -346,55 +348,86 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Column(
                       children: [
-                        //박스 시작
+                        /**프리뷰 파트 */
+                        //파란 컨테이너
                         Container(
                           width: _width * 1,
-                          height: _height * 0.35,
-                          color: Palette.blue,
+                          height: _height * 0.55,
+                          color: Palette.blue4,
                           child: Column(children: [
-                            SizedBox(
-                              height: 20,
-                            ),
-
-                            //하단
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Column(
-                                  children: [
-                                    //choose part
-                                    Text(
-                                      "What kind of knowledge do you want to know?",
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Palette.white,
-                                          fontWeight: FontWeight.bold),
+                            Column(
+                              children: <Widget>[
+                                // const HeaderWidget(),
+                                InkWell(
+                                  child: SizedBox(
+                                    //썸네일 사진과는 상관x
+                                    height: _height * 0.53,
+                                    child: Swiper(
+                                      itemCount: planetInfo.length,
+                                      itemWidth:
+                                          MediaQuery.of(context).size.width,
+                                      itemHeight:
+                                          MediaQuery.of(context).size.height *
+                                              0.7,
+                                      layout: SwiperLayout.TINDER,
+                                      //하단 점 6개
+                                      pagination: SwiperPagination(
+                                          builder: DotSwiperPaginationBuilder(
+                                              color: Colors.lightBlueAccent,
+                                              activeColor: Colors.white,
+                                              activeSize: 12,
+                                              space: 4)),
+                                      itemBuilder: (context, index) {
+                                        return InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                PageRouteBuilder(
+                                                    pageBuilder: (context,
+                                                            animation,
+                                                            secondaryAnimation) =>
+                                                        DetailsPage(
+                                                            planetInfo:
+                                                                planetInfo[
+                                                                    index])));
+                                          },
+                                          child: Stack(
+                                            children: [
+                                              Column(
+                                                children: [
+                                                  CustomCard(
+                                                    name:
+                                                        planetInfo[index].name,
+                                                  ),
+                                                ],
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 25),
+                                                //여기가 카드 섹션 이미지 크기
+                                                child: Hero(
+                                                    tag: planetInfo[index]
+                                                        .position,
+                                                    child: SizedBox(
+                                                      width: _width * 0.5,
+                                                      height: _height * 0.32,
+                                                      child: Image.asset(
+                                                          planetInfo[index]
+                                                              .iconImage),
+                                                    )),
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      },
                                     ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-                                    Container(
-                                      width: _width * 0.95,
-                                      height: 2,
-                                      color: Palette.white,
-                                    ),
-                                    SizedBox(
-                                      height: 20,
-                                    ),
-
-                                    //white box
-                                    Column(
-                                      children: [
-                                        FullView_firstline(),
-                                        // FullView_Button(),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                )
                               ],
                             ),
                           ]),
                         ), //mypage box end//
+
                         SizedBox(
                           height: 30,
                         ),
@@ -402,7 +435,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "More knowledge with more people to share",
                           style: TextStyle(
                               fontSize: 17,
-                              color: ColorStyle.mainColor,
+                              color: Palette.blue5,
                               fontWeight: FontWeight.normal),
                         ),
                         SizedBox(
@@ -533,11 +566,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         //     );
                         //   },
                         // ), //메인 포스트들
-                        Main_Postbox(),
-                        SizedBox(
-                          height: 6,
-                        ),
-                        Prevoius_Next_Button()
+                        // Main_Postbox(),
+                        // SizedBox(
+                        //   height: 6,
+                        // ),
+                        // Prevoius_Next_Button()
                       ],
                     ),
                   ],

@@ -29,6 +29,8 @@ dependencies:
   image_picker: ^0.8.7
   flutter_svg: ^2.0.4
   carousel_slider: ^4.2.1
+  ionicons: ^0.2.2
+  card_swiper: ^2.0.4
   
 
 dev_dependencies:
@@ -45,3 +47,9 @@ flutter:
   - assets/images/votes.png
   - assets/icons/putyourhandsup.svg
   - assets/images/shuttle.png
+  - assets/images/Icon.png
+  - assets/images/earth.png
+  - assets/images/jupiter.png
+  - assets/images/mars.png
+  - assets/images/mercury.png
+  - assets/images/venus.png
