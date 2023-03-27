@@ -363,6 +363,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     //썸네일 사진과는 상관x
                                     height: _height * 0.53,
                                     child: Swiper(
+                                      autoplay: true,
                                       itemCount: planetInfo.length,
                                       itemWidth:
                                           MediaQuery.of(context).size.width,
@@ -398,6 +399,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   CustomCard(
                                                     name:
                                                         planetInfo[index].name,
+                                                    category: planetInfo[index]
+                                                        .category,
+                                                    category_icon:
+                                                        planetInfo[index]
+                                                            .category_icon,
                                                   ),
                                                 ],
                                               ),

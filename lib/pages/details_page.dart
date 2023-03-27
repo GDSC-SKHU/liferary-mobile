@@ -22,7 +22,7 @@ class DetailsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(32.0),
+                    padding: const EdgeInsets.fromLTRB(32, 30, 32, 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -38,20 +38,39 @@ class DetailsPage extends StatelessWidget {
                               color: Palette.blue2),
                           textAlign: TextAlign.left,
                         ),
-                        //본문
-                        Text(
-                          'Solar System',
-                          style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.w300,
-                              color: Colors.amber),
-                          textAlign: TextAlign.left,
+                        SizedBox(
+                          height: 10,
                         ),
+                        //본문
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 30,
+                              child: Icon(
+                                Icons.more,
+                                color: Palette.blue,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "etc..",
+                              style:
+                                  TextStyle(fontSize: 20, color: Palette.blue),
+                              textAlign: TextAlign.left,
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+
                         const Divider(
                           color: Colors.black38,
                         ),
                         const SizedBox(
-                          height: 12,
+                          height: 20,
                         ),
                         //details 본문
                         Text(
@@ -61,17 +80,20 @@ class DetailsPage extends StatelessWidget {
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
-                              color: Colors.amber),
+                              color: Colors.black54),
                           textAlign: TextAlign.left,
                         ),
                         const SizedBox(
-                          height: 12,
+                          height: 20,
                         ),
                         const Divider(
                           color: Colors.black38,
                         ),
                       ],
                     ),
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   //하단 갤러리파트
                   Padding(
@@ -81,7 +103,7 @@ class DetailsPage extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.w600,
-                          color: Colors.amber),
+                          color: Palette.blue4),
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -122,19 +144,19 @@ class DetailsPage extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          planetInfo.name,
+                          "Liferary",
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
-                              fontSize: 30,
-                              fontWeight: FontWeight.w900,
+                              fontSize: 25,
+                              fontWeight: FontWeight.w600,
                               color: Palette.blue4),
                         ),
                         SizedBox(
                           width: 20,
                         ),
                         SizedBox(
-                          width: 100,
+                          width: _width * 0.15,
                           child: Image.asset('assets/images/Icon.png'),
                         ),
                       ],

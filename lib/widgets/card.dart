@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:liferary/model/planet_info.dart';
+import 'package:liferary/utilities/palette.dart';
 
 class CustomCard extends StatelessWidget {
   final String name;
+  final String category;
+  final String category_icon;
 
-  const CustomCard({Key? key, required this.name}) : super(key: key);
+  const CustomCard(
+      {Key? key,
+      required this.name,
+      required this.category,
+      required this.category_icon})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,19 +32,33 @@ class CustomCard extends StatelessWidget {
               Text(
                 name,
                 style: TextStyle(
-                    color: Colors.amber,
+                    color: Palette.blue5,
                     fontWeight: FontWeight.w900,
                     fontFamily: 'Avenir',
                     fontSize: 50),
                 textAlign: TextAlign.left,
               ),
-              Text(
-                "Solar System",
-                style: TextStyle(
-                    color: Colors.amber,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 28),
-                textAlign: TextAlign.left,
+              Row(
+                children: [
+                  SizedBox(
+                    width: 30,
+                    child: Icon(
+                      Icons.more,
+                      color: Palette.blue,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    category,
+                    style: TextStyle(
+                        color: Palette.blue4,
+                        fontWeight: FontWeight.w600,
+                        fontSize: 28),
+                    textAlign: TextAlign.left,
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 24,
@@ -46,7 +69,7 @@ class CustomCard extends StatelessWidget {
                   Text(
                     "Know More",
                     style: TextStyle(
-                        color: Colors.amber,
+                        color: Palette.blue3,
                         fontWeight: FontWeight.w600,
                         fontSize: 20),
                     textAlign: TextAlign.left,
@@ -55,7 +78,7 @@ class CustomCard extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 10.0),
                     child: Icon(
                       Ionicons.arrow_forward,
-                      color: Colors.amber,
+                      color: Palette.blue3,
                       size: 20,
                     ),
                   )
