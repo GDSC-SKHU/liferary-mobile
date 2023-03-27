@@ -1,17 +1,12 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
-import 'package:liferary/API/postController.dart';
-import 'package:liferary/FullView_category/fullview_button.dart';
 import 'package:liferary/FullView_category/fullview_firstline.dart';
-import 'package:liferary/category/left_sentence.dart';
 import 'package:liferary/screens/Mypage.dart';
 import 'package:liferary/screens/login.dart';
-import 'package:liferary/screens/share_post.dart';
 import 'package:liferary/screens/share_write.dart';
 import 'package:liferary/utilities/palette.dart';
 import 'package:liferary/widgets/Prevoius_Next_Button.dart';
+import 'package:liferary/widgets/main_posts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../category/select_value.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key});
@@ -51,6 +46,8 @@ class _HomeScreenState extends State<HomeScreen> {
     print(hasAccessToken);
   }
 
+  TextEditingController inputController = TextEditingController();
+  String inputText = '';
   @override
   Widget build(BuildContext context) {
     // var postLast;
@@ -116,115 +113,88 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: 8,
                         ),
-                        // Container(
-                        //   width: _width * 0.74,
-                        //   height: _height * 0.05,
-                        //   decoration: BoxDecoration(
-                        //     color: Palette.white,
-                        //     borderRadius: BorderRadius.circular(10),
-                        //     border: Border.all(color: Palette.blue, width: 2),
-                        //   ),
-                        //   child: Padding(
-                        //     padding: const EdgeInsets.fromLTRB(10, 5, 5, 10),
-                        //     child: TextField(
-                        //       controller: SearchController,
-                        //       decoration: InputDecoration(
-                        //         border: InputBorder.none,
-                        //         prefixIcon: Icon(Icons.search),
-                        //         iconColor: Palette.white,
-                        //         labelText: 'Search',
-                        //         labelStyle: TextStyle(color: Palette.blue),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                       ]),
                       SizedBox(
-                        width: 10,
+                        width: 20,
                       ),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Palette.blue3,
-                              ),
-                              child: Icon(
-                                Icons.person,
-                                size: _width * 0.1,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MyPage()),
-                                );
-                              },
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Palette.blue3,
                             ),
+                            child: Icon(
+                              Icons.person,
+                              size: _width * 0.1,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => MyPage()),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                            height: 5,
                           ),
 
                           //Logout button
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
-                            child: hasAccessToken == true
-                                ? InkWell(
-                                    child: Center(
-                                        child: Container(
-                                            width: _width * 0.2,
-                                            height: _height * 0.03,
-                                            decoration: BoxDecoration(
-                                              color: Palette.blue3,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
+                          hasAccessToken == true
+                              ? InkWell(
+                                  child: Center(
+                                      child: Container(
+                                          width: _width * 0.2,
+                                          height: _height * 0.03,
+                                          decoration: BoxDecoration(
+                                            color: Palette.blue3,
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "Logout",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Palette.white),
                                             ),
-                                            child: Center(
-                                              child: Text(
-                                                "Logout",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Palette.white),
-                                              ),
-                                            ))),
-                                    onTap: () {
-                                      _logout();
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => HomeScreen()),
-                                      );
-                                    },
-                                  )
-                                /**hasaccessToken */
-                                : InkWell(
-                                    child: Center(
-                                        child: Container(
-                                            width: _width * 0.2,
-                                            height: _height * 0.03,
-                                            decoration: BoxDecoration(
-                                              color: Palette.blue3,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            child: Center(
-                                              child: Text(
-                                                "Login",
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Palette.white),
-                                              ),
-                                            ))),
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                LoginScreen()),
-                                      );
-                                    },
-                                  ),
-                          ),
+                                          ))),
+                                  onTap: () {
+                                    _logout();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomeScreen()),
+                                    );
+                                  },
+                                )
+                              /**hasaccessToken */
+                              : InkWell(
+                                  child: Container(
+                                      width: _width * 0.2,
+                                      height: _height * 0.03,
+                                      decoration: BoxDecoration(
+                                        color: Palette.blue3,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Login",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Palette.white),
+                                        ),
+                                      )),
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()),
+                                    );
+                                  },
+                                ),
                         ],
                       )
                     ]),
@@ -282,105 +252,136 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ]),
                         ), //mypage box end//
-
-                        Row(
-                          children: [
-                            // Padding(
-                            //   //selected part
-                            //   padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
-                            //   child: Container(
-                            //     alignment: Alignment.centerLeft,
-                            //     width: _width * 0.8,
-                            //     height: _height * 0.045,
-                            //     decoration: BoxDecoration(
-                            //       color: Palette.white,
-                            //       borderRadius: BorderRadius.circular(10),
-                            //       border:
-                            //           Border.all(color: Palette.blue, width: 2),
-                            //     ),
-                            //     child: Row(
-                            //       children: [
-                            //         SizedBox(
-                            //           width: 10,
-                            //         ),
-                            //         Text(
-                            //           "Selected : ",
-                            //           style: TextStyle(
-                            //               fontSize: 18,
-                            //               color: Palette.blue3,
-                            //               fontWeight: FontWeight.bold),
-                            //         ),
-                            //         Text(
-                            //           "${ValueManager.selectedValue}",
-                            //           style: TextStyle(
-                            //               fontSize: 18,
-                            //               color: Palette.blue4,
-                            //               fontWeight: FontWeight.bold),
-                            //         ),
-                            //       ],
-                            //     ),
-                            //   ),
-                            // ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
-                              child: hasAccessToken == true
-                                  ? ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Palette.white,
-                                        shape: CircleBorder(),
-                                        side: BorderSide(
-                                          color: Palette.blue,
-                                          width: 2,
+                        SizedBox(
+                          height: 10,
+                        ),
+                        GestureDetector(
+                          //여백 눌렀을 때 키보드 사라지게 하기.
+                          onTap: () => FocusScope.of(context).unfocus(),
+                          child: SingleChildScrollView(
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Padding(
+                                  padding:
+                                      EdgeInsets.fromLTRB(10.0, 0.0, 5.0, 0.0),
+                                  child: SizedBox(
+                                    width: _width * 0.78,
+                                    height: _height * 0.05,
+                                    child: TextField(
+                                      controller: inputController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Search',
+                                        hintText: 'Search what you want!',
+                                        labelStyle:
+                                            TextStyle(color: Palette.blue),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide: BorderSide(
+                                              width: 1, color: Palette.blue),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          borderSide: BorderSide(
+                                              width: 1, color: Palette.blue),
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
                                         ),
                                       ),
-                                      child: Icon(
-                                        Icons.create,
-                                        size: _width * 0.09,
-                                        color: Palette.blue4,
-                                      ),
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                Share_writeScreen(),
-                                          ),
-                                        );
-                                      },
-                                    )
-                                  : SizedBox(),
-                            ),
-                          ],
-                        ),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Palette.white,
-                            shape: CircleBorder(),
-                            side: BorderSide(
-                              color: Palette.blue,
-                              width: 2,
-                            ),
-                          ),
-                          child: Icon(
-                            Icons.create,
-                            size: _width * 0.09,
-                            color: Palette.blue4,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ShareScreen(
-                                  id: 6,
+                                      keyboardType: TextInputType.multiline,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
-                        ), //메인 포스트들
+                                ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      inputText = inputController.text;
+                                    });
+                                  },
+                                  child: Image(
+                                    image:
+                                        AssetImage('assets/images/shuttle.png'),
+                                    width: _width * 0.08,
+                                    color: Palette.blue,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        hasAccessToken == true
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    "Share your knowledge!",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Palette.blue,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Palette.white,
+                                      shape: CircleBorder(),
+                                      side: BorderSide(
+                                        color: Palette.blue,
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: Icon(
+                                      Icons.create,
+                                      size: _width * 0.09,
+                                      color: Palette.blue4,
+                                    ),
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              Share_writeScreen(),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              )
+                            : SizedBox(),
+                        // ElevatedButton(
+                        //   style: ElevatedButton.styleFrom(
+                        //     backgroundColor: Palette.white,
+                        //     shape: CircleBorder(),
+                        //     side: BorderSide(
+                        //       color: Palette.blue,
+                        //       width: 2,
+                        //     ),
+                        //   ),
+                        //   child: Icon(
+                        //     Icons.create,
+                        //     size: _width * 0.09,
+                        //     color: Palette.blue4,
+                        //   ),
+                        //   onPressed: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => ShareScreen(
+                        //           id: 1,
+                        //         ),
+                        //       ),
+                        //     );
+                        //   },
+                        // ), //메인 포스트들
+                        Main_Postbox(),
                         SizedBox(
                           height: 6,
                         ),
-                        /** */
                         Prevoius_Next_Button()
                       ],
                     ),

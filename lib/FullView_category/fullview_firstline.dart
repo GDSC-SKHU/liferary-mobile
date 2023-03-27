@@ -1,9 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-
-import '../category/select_value.dart';
 import '../utilities/palette.dart';
 
 class FullView_firstline extends StatefulWidget {
@@ -24,7 +20,9 @@ class _FullView_firstlineState extends State<FullView_firstline> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                print("cook");
+              },
               child: Container(
                 width: _width * 0.3,
                 height: _height * 0.035,
@@ -323,7 +321,7 @@ class _FullView_firstlineState extends State<FullView_firstline> {
                     width: 2,
                   ),
                 ),
-                child: Text('etc...',
+                child: Text('etc..',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         fontSize: 17,
