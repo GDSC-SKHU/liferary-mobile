@@ -1,3 +1,4 @@
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:liferary/API/authController.dart';
@@ -5,6 +6,8 @@ import 'package:liferary/Styles/ColorStyles.dart';
 import 'package:liferary/Styles/Styles.dart';
 import 'package:liferary/screens/login.dart';
 import 'package:liferary/utilities/palette.dart';
+
+import 'home.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({super.key});
@@ -14,11 +17,78 @@ class MyPage extends StatefulWidget {
 }
 
 class _MyPageState extends State<MyPage> {
+  int _selectedIndex = 3;
+  void _bottomnavigation(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (_selectedIndex) {
+      case 0:
+        Navigator.pushNamed(context, '/');
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/share_post');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/share_write');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/mypage');
+        break;
+      case 4:
+        Navigator.pushNamed(context, '/settings');
+        break;
+      default:
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Palette.white,
-        // appBar: AppBar(automaticallyImplyLeading: false),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          elevation: 0.0,
+          title: Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+          actions: [
+            Row(
+              children: [
+                Text(
+                  "yaho0919",
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Palette.blue,
+                      fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                  icon: Icon(Icons.login),
+                  onPressed: () => {
+                    // HomeScreen _l
+                    // _logout(),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                    )
+                  },
+                ),
+              ],
+            )
+          ],
+        ),
+        bottomNavigationBar: ConvexAppBar(
+          backgroundColor: Palette.blue,
+          items: const <TabItem>[
+            TabItem(icon: Icons.home, title: 'Home'),
+            TabItem(icon: Icons.format_list_bulleted, title: 'Full View'),
+            TabItem(icon: Icons.add, title: 'publish'),
+            TabItem(icon: Icons.person, title: 'My Page'),
+            TabItem(icon: Icons.settings, title: 'Settings'),
+          ],
+          initialActiveIndex: _selectedIndex,
+          onTap: _bottomnavigation,
+        ),
         body: SafeArea(child: Builder(
           builder: (context) {
             return SingleChildScrollView(
@@ -26,81 +96,11 @@ class _MyPageState extends State<MyPage> {
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    Row(children: [
-                      //logo
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(12, 0, 20, 0),
-                        child: Container(
-                          width: 160,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/logo.png'),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      //welcome write
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                        child: Text(
-                          "Welcome,\nusername!",
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Palette.blue,
-                          ),
-                        ),
-                      ),
-
-                      Column(
-                        children: [
-                          //person icon
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                            child: Icon(
-                              Icons.person,
-                              size: 60,
-                              color: Colors.grey,
-                            ),
-                          ),
-
-                          //Logout button
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 0, 0, 20),
-                            child: InkWell(
-                              child: Center(
-                                  child: Container(
-                                      width: 75,
-                                      height: 19,
-                                      decoration: BoxDecoration(
-                                        color: Palette.blue3,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "Logout",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Palette.white),
-                                        ),
-                                      ))),
-
-                              //Logout 버튼 클릭시 네비게이션 작동
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginScreen()),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      )
-                    ]),
                     Column(
                       children: [
+                        SizedBox(
+                          height: 20,
+                        ),
                         //박스 시작
                         Container(
                           width: MediaQuery.of(context).size.width * 0.95,
@@ -212,163 +212,3 @@ class _MyPageState extends State<MyPage> {
         )));
   }
 }
-                    // Container(
-                    //   height: 500,
-                    //   child: DefaultTabController(
-                    //     length: 2,
-                    //     child: Scaffold(
-                    //         appBar: AppBar(
-                    //           automaticallyImplyLeading: false,
-                    //           bottom: TabBar(
-                    //               indicatorColor: ColorStyle.mainColor,
-                    //               tabs: [
-                    //                 Padding(
-                    //                   padding: const EdgeInsets.all(8.0),
-                    //                   child: Container(
-                    //                     alignment: Alignment.center,
-                    //                     width: 200,
-                    //                     height: 70,
-                    //                     decoration: BoxDecoration(
-                    //                         color: ColorStyle.mainColor,
-                    //                         borderRadius:
-                    //                             BorderRadius.circular(15)),
-                    //                     child: Text(
-                    //                       '게시글 (${snapshot.data!.posts!.myContent!.length})',
-                    //                       style: Styles.tabBarText,
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //                 Padding(
-                    //                   padding: const EdgeInsets.all(8.0),
-                    //                   child: Container(
-                    //                     alignment: Alignment.center,
-                    //                     width: 200,
-                    //                     height: 70,
-                    //                     decoration: BoxDecoration(
-                    //                         color: ColorStyle.mainColor,
-                    //                         borderRadius:
-                    //                             BorderRadius.circular(15)),
-                    //                     child: Text(
-                    //                       '댓글 (${snapshot.data!.comments!.myContent!.length})',
-                    //                       style: Styles.tabBarText,
-                    //                     ),
-                    //                   ),
-                    //                 ),
-                    //               ]),
-                    //         ),
-                    //         body: TabBarView(
-                    //           children: [
-                    //             Container(
-                    //               width: 200,
-                    //               height: 200,
-                    //               alignment: Alignment.center,
-                    //               child: ListView.builder(
-                    //                   itemCount: snapshot
-                    //                       .data!.posts!.myContent!.length,
-                    //                   itemBuilder: ((context, index) {
-                    //                     var conId = snapshot
-                    //                         .data!.posts!.myContent![index].id;
-                    //                     return Padding(
-                    //                       padding: const EdgeInsets.all(8.0),
-                    //                       child: GestureDetector(
-                    //                         child: Container(
-                    //                           width: MediaQuery.of(context)
-                    //                                   .size
-                    //                                   .width *
-                    //                               0.9,
-                    //                           height: 50,
-                    //                           decoration: BoxDecoration(
-                    //                               borderRadius:
-                    //                                   BorderRadius.circular(15),
-                    //                               border: Border.all(
-                    //                                   width: 1,
-                    //                                   color: ColorStyle
-                    //                                       .mainColor)),
-                    //                           child: Row(children: [
-                    //                             Container(
-                    //                                 width: 50,
-                    //                                 padding:
-                    //                                     EdgeInsets.fromLTRB(
-                    //                                         10, 0, 10, 0),
-                    //                                 child: Text(typeStringKo(
-                    //                                     snapshot
-                    //                                         .data!
-                    //                                         .posts!
-                    //                                         .myContent![index]
-                    //                                         .type))),
-                    //                             Container(
-                    //                               width: 1,
-                    //                               height: 15,
-                    //                               color: ColorStyle.mainColor,
-                    //                             ),
-                    //                             Container(
-                    //                                 alignment: Alignment.center,
-                    //                                 width: 200,
-                    //                                 child: Text(
-                    //                                     '${snapshot.data!.posts!.myContent![index].title}')),
-                    //                             Padding(
-                    //                               padding: const EdgeInsets.all(
-                    //                                   10.0),
-                    //                               child: Text(
-                    //                                   '${snapshot.data!.posts!.myContent![index].modifiedDate.toString().substring(5, 16).replaceAll('T', '/')}'),
-                    //                             )
-                    //                           ]),
-                    //                         ),
-                    //                         onTap: () {
-                    //                           Navigator.push(
-                    //                               context,
-                    //                               MaterialPageRoute(
-                    //                                   builder: ((context) =>
-                    //                                       Post(
-                    //                                         id: conId,
-                    //                                       ))));
-                    //                         },
-                    //                       ),
-                    //                     );
-                    //                   })),
-                    //             ),
-                    //             Container(
-                    //               width: 200,
-                    //               height: 200,
-                    //               alignment: Alignment.center,
-                    //               child: ListView.builder(
-                    //                   itemCount: snapshot
-                    //                       .data!.comments!.myContent!.length,
-                    //                   itemBuilder: ((context, index) {
-                    //                     return Container(
-                    //                       child: Card(
-                    //                           elevation: 1,
-                    //                           surfaceTintColor: Colors.white,
-                    //                           child: Column(
-                    //                             children: [
-                    //                               Padding(
-                    //                                 padding:
-                    //                                     const EdgeInsets.all(
-                    //                                         10.0),
-                    //                                 child: Container(
-                    //                                   alignment:
-                    //                                       Alignment.topLeft,
-                    //                                   child: Text(
-                    //                                       '${snapshot.data!.comments!.myContent![index].context}'),
-                    //                                 ),
-                    //                               ),
-                    //                               Padding(
-                    //                                 padding:
-                    //                                     const EdgeInsets.all(
-                    //                                         10.0),
-                    //                                 child: Container(
-                    //                                   alignment:
-                    //                                       Alignment.bottomRight,
-                    //                                   child: Text(
-                    //                                       '${snapshot.data!.comments!.myContent![index].modifiedDate.toString().substring(2, 16).replaceAll('T', ' ')}'),
-                    //                                 ),
-                    //                               )
-                    //                             ],
-                    //                           )),
-                    //                     );
-                    //                   })),
-                    //             ),
-                    //           ],
-                    //         )),
-                    //   ),
-                    // ),

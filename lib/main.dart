@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:liferary/screens/MyPage.dart';
 import 'package:liferary/screens/home.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:liferary/screens/setting.dart';
+import 'package:liferary/screens/share_write.dart';
 import 'firebase_options.dart';
 
 // Future<void> main() async {
@@ -43,7 +46,14 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             darkTheme: ThemeData.dark(),
             themeMode: currentMode,
-            home: HomeScreen(),
+            initialRoute: '/',
+            routes: {
+              '/': (context) => HomeScreen(),
+              '/share_post': (context) => Share_writeScreen(),
+              '/share_write': (context) => Share_writeScreen(),
+              '/mypage': (context) => MyPage(),
+              '/settings': (context) => Settings(),
+            },
             // initialRoute: "/setting",
             // routes: {
             //   "/login": (context) => LoginScreen(),

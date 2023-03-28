@@ -1,3 +1,5 @@
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:liferary/API/postController.dart';
@@ -7,6 +9,7 @@ import 'package:liferary/screens/home.dart';
 import 'package:liferary/screens/login.dart';
 import 'package:liferary/utilities/palette.dart';
 import 'package:liferary/widgets/createstudy_modal.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Share_writeScreen extends StatefulWidget {
   const Share_writeScreen({super.key});
@@ -17,9 +20,22 @@ class Share_writeScreen extends StatefulWidget {
 
 class _Share_writeScreenState extends State<Share_writeScreen> {
   final SearchController = TextEditingController();
-  // final TextEditingController titleController = TextEditingController();
-  // final _writePostController = WritePostController();
-  // WritePostController _postWrite = WritePostController();
+  final List<String> items = [
+    "cooking",
+    "fitness",
+    "nonsense",
+    "relationship",
+    "programming",
+    "language",
+    "makeup",
+    "music",
+    "fashion",
+    "leisure",
+    "travel",
+    "etc.."
+  ];
+  String? selectedValue;
+
   void getFile() async {
     FilePickerResult? result =
         await FilePicker.platform.pickFiles(allowMultiple: true);
@@ -30,6 +46,37 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
       // 파일 사용하기
     } else {
       // 취소 버튼을 눌렀을 때 처리할 코드 작성
+    }
+  }
+
+  void test() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final hasAccessToken = prefs.getBool('hasAccessToken') ?? false;
+  }
+
+  int _selectedIndex = 2;
+  void _bottomnavigation(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (_selectedIndex) {
+      case 0:
+        Navigator.pushNamed(context, '/');
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/share_post');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/share_write');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/mypage');
+        break;
+      case 4:
+        Navigator.pushNamed(context, '/settings');
+        break;
+      default:
     }
   }
 
@@ -53,142 +100,171 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: Palette.white,
-        // appBar: AppBar(automaticallyImplyLeading: false),
+        bottomNavigationBar: ConvexAppBar(
+          backgroundColor: Palette.blue,
+          items: const <TabItem>[
+            TabItem(icon: Icons.home, title: 'Home'),
+            TabItem(icon: Icons.format_list_bulleted, title: 'Full View'),
+            TabItem(icon: Icons.add, title: 'publish'),
+            TabItem(icon: Icons.person, title: 'My Page'),
+            TabItem(icon: Icons.settings, title: 'Settings'),
+          ],
+          initialActiveIndex: _selectedIndex,
+          onTap: _bottomnavigation,
+        ),
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          elevation: 0.0,
+          title: Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+          actions: [
+            Row(
+              children: [
+                Text(
+                  "yaho0919",
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Palette.blue,
+                      fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                  icon: Icon(Icons.login),
+                  onPressed: () => {
+                    // HomeScreen _l
+                    // _logout(),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                    )
+                  },
+                ),
+              ],
+            )
+          ],
+        ),
         body: SafeArea(child: Builder(
           builder: (context) {
             return SingleChildScrollView(
               child: Container(
                 child: Column(
                   children: [
-                    Row(children: [
-                      Column(children: [
-                        //logo
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(12, 0, 20, 0),
-                              child: Container(
-                                width: _width * 0.4,
-                                height: _height * 0.04,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/images/logo.png'),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            //welcome write
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                              child: Text(
-                                "Welcome,\nusername!",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Palette.blue,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        Container(
-                          width: _width * 0.74,
-                          height: _height * 0.05,
-                          decoration: BoxDecoration(
-                            color: Palette.white,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Palette.blue, width: 2),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 5, 5, 10),
-                            child: TextField(
-                              controller: SearchController,
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                prefixIcon: Icon(Icons.search),
-                                iconColor: Palette.white,
-                                labelText: 'Search',
-                                labelStyle: TextStyle(color: Palette.blue),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ]),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Palette.blue3,
-                              ),
-                              child: Icon(
-                                Icons.person,
-                                size: _width * 0.135,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MyPage()),
-                                );
-                              },
-                            ),
-                          ),
-
-                          //Logout button
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                            child: InkWell(
-                              child: Center(
-                                  child: Container(
-                                      width: _width * 0.2,
-                                      height: _height * 0.03,
-                                      decoration: BoxDecoration(
-                                        color: Palette.blue3,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "Logout",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Palette.white),
-                                        ),
-                                      ))),
-
-                              //Logout 버튼 클릭시 네비게이션 작동
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginScreen()),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      )
-                    ]),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Column(
                       children: [
                         //박스 시작
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            SizedBox(
+                              width: 20,
+                            ),
                             Text(
-                              "Tag : ",
+                              "Tag   :   ",
                               style: TextStyle(
                                 color: Palette.blue4,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            ChooseCategory(),
+                            Center(
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton2(
+                                  isExpanded: true,
+                                  hint: Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.list,
+                                        size: 16,
+                                        color: Palette.white,
+                                      ),
+                                      SizedBox(
+                                        width: 4,
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          'Select Category',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.lightGreenAccent,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  items: items
+                                      .map((item) => DropdownMenuItem<String>(
+                                            value: item,
+                                            child: Text(
+                                              item,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ))
+                                      .toList(),
+                                  value: selectedValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      selectedValue = value as String;
+                                    });
+                                  },
+                                  buttonStyleData: ButtonStyleData(
+                                    height: _height * 0.05,
+                                    width: _width * 0.5,
+                                    padding: const EdgeInsets.only(
+                                        left: 14, right: 14),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(14),
+                                      // border: Border.all(
+                                      //   color: Colors.black26,
+                                      // ),
+                                      color: Palette.blue2,
+                                    ),
+                                    elevation: 2,
+                                  ),
+                                  iconStyleData: const IconStyleData(
+                                    icon: Icon(
+                                      Icons.arrow_drop_down,
+                                    ),
+                                    iconSize: 30,
+                                    iconEnabledColor: Colors.lightGreenAccent,
+                                    iconDisabledColor: Colors.grey,
+                                  ),
+                                  dropdownStyleData: DropdownStyleData(
+                                    maxHeight: 200,
+                                    width: 200,
+                                    padding: null,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(14),
+                                      color: Palette.blue3,
+                                    ),
+                                    elevation: 8,
+                                    offset: const Offset(30, -5),
+                                    scrollbarTheme: ScrollbarThemeData(
+                                      radius: const Radius.circular(40),
+                                      thickness:
+                                          MaterialStateProperty.all<double>(6),
+                                      thumbVisibility:
+                                          MaterialStateProperty.all<bool>(true),
+                                    ),
+                                  ),
+                                  menuItemStyleData: const MenuItemStyleData(
+                                    height: 40,
+                                    padding:
+                                        EdgeInsets.only(left: 14, right: 14),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
-
                         Padding(
                           padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
                           child: Container(
@@ -239,7 +315,7 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 25, 60),
+                              padding: const EdgeInsets.fromLTRB(0, 0, 25, 10),
                               child: Container(
                                 //comment
                                 width: _width * 0.23,
@@ -347,6 +423,9 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                         ),
                       ],
                     ),
+                    // SizedBox(
+                    //   height: 100,
+                    // ),
                   ],
                 ),
               ),

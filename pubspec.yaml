@@ -31,7 +31,8 @@ dependencies:
   carousel_slider: ^4.2.1
   ionicons: ^0.2.2
   card_swiper: ^2.0.4
-  
+  convex_bottom_bar: ^3.2.0
+  dropdown_button2: ^2.0.0
 
 dev_dependencies:
   flutter_test:

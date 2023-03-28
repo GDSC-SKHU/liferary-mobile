@@ -1,33 +1,14 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:liferary/FullView_category/fullview_firstline.dart';
-import 'package:liferary/Styles/ColorStyles.dart';
-import 'package:liferary/screens/Mypage.dart';
 import 'package:liferary/screens/login.dart';
 import 'package:liferary/screens/share_write.dart';
 import 'package:liferary/utilities/palette.dart';
-import 'package:liferary/widgets/Prevoius_Next_Button.dart';
-import 'package:liferary/widgets/main_posts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
 import '../model/planet_info.dart';
 import '../pages/details_page.dart';
 import '../widgets/card.dart';
-
-final bearItem = {
-  "list": [
-    {"image": "assets/images/img_blue.png", "name": "파랑이"},
-    {"image": "assets/images/img_mint.png", "name": "민트트"},
-    {"image": "assets/images/img_skyblue.png", "name": "하늘이"},
-    {"image": "assets/images/img_white.png", "name": "하양이"},
-    {"image": "assets/images/img_pink.png", "name": "분홍이"},
-    {"image": "assets/images/img_yellow.png", "name": "노랑이"},
-    {"image": "assets/images/img_purple.png", "name": "보라라"},
-    {"image": "assets/images/img_mix.png", "name": "믹스스"}
-  ]
-};
-// BearList? bearList;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key});
@@ -37,19 +18,39 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Future<PostList> postListView = listPost(0);
-  // var postNumber = 0;
+  static bool hasAccessToken = false;
   final SearchController = TextEditingController();
-  bool hasAccessToken = false;
   @override
   void initState() {
     super.initState();
     _logintoggle();
   }
 
-  // Future<void> SelectCategory() async {
-  //   final select_c = await
-  // }
+  int _selectedIndex = 0;
+  void _bottomnavigation(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (_selectedIndex) {
+      case 0:
+        Navigator.pushNamed(context, '/');
+        break;
+      case 1:
+        Navigator.pushNamed(context, '/share_post');
+        break;
+      case 2:
+        Navigator.pushNamed(context, '/share_write');
+        break;
+      case 3:
+        Navigator.pushNamed(context, '/mypage');
+        break;
+      case 4:
+        Navigator.pushNamed(context, '/settings');
+        break;
+      default:
+    }
+  }
 
   Future<void> _logintoggle() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -73,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -127,6 +129,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   )
           ],
+        ),
+        bottomNavigationBar: ConvexAppBar(
+          backgroundColor: Palette.blue,
+          items: const <TabItem>[
+            TabItem(icon: Icons.home, title: 'Home'),
+            TabItem(icon: Icons.format_list_bulleted, title: 'Full View'),
+            TabItem(icon: Icons.add, title: 'publish'),
+            TabItem(icon: Icons.person, title: 'My Page'),
+            TabItem(icon: Icons.settings, title: 'Settings'),
+          ],
+          initialActiveIndex: _selectedIndex,
+          onTap: _bottomnavigation,
         ),
         drawer: Drawer(
           child: ListView(
@@ -343,6 +357,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 child: Column(
                   children: [
+                    IndexedStack(
+                      index: _selectedIndex,
+                      // children: listWidgets,
+                    ),
+                    // listWidgets[_selectedIndex],
                     SizedBox(
                       height: 10,
                     ),
