@@ -1,11 +1,10 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:liferary/screens/login.dart';
-import 'package:liferary/screens/share_write.dart';
 import 'package:liferary/utilities/palette.dart';
+import 'package:liferary/widgets/main_Rstudy.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-
 import '../model/planet_info.dart';
 import '../pages/details_page.dart';
 import '../widgets/card.dart';
@@ -37,11 +36,17 @@ class _HomeScreenState extends State<HomeScreen> {
         Navigator.pushNamed(context, '/');
         break;
       case 1:
-        Navigator.pushNamed(context, '/share_post');
+        Navigator.pushNamed(context, '/postlist');
         break;
       case 2:
-        Navigator.pushNamed(context, '/share_write');
-        break;
+        if (hasAccessToken == true) {
+          Navigator.pushNamed(context, '/share_write');
+          break;
+        } else {
+          Navigator.pushNamed(context, '/plzlogin');
+          break;
+        }
+
       case 3:
         Navigator.pushNamed(context, '/mypage');
         break;
@@ -134,8 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
           backgroundColor: Palette.blue,
           items: const <TabItem>[
             TabItem(icon: Icons.home, title: 'Home'),
-            TabItem(icon: Icons.format_list_bulleted, title: 'Full View'),
-            TabItem(icon: Icons.add, title: 'publish'),
+            TabItem(icon: Icons.format_list_bulleted, title: 'Posts'),
+            TabItem(icon: Icons.add, title: 'Publish'),
             TabItem(icon: Icons.person, title: 'My Page'),
             TabItem(icon: Icons.settings, title: 'Settings'),
           ],
@@ -171,33 +176,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       bottomRight: Radius.circular(0.0),
                     )), // 빨간 부분을 꾸미기 위한 기능
               ),
-              /**탭바로 내리기로함 */
-              // Container(
-              //   height: 30,
-              //   child: ElevatedButton(
-              //     style: ElevatedButton.styleFrom(
-              //       backgroundColor: Palette.white,
-              //       shape: CircleBorder(),
-              //       side: BorderSide(
-              //         color: Palette.blue,
-              //         width: 1.5,
-              //       ),
-              //     ),
-              //     child: Icon(
-              //       Icons.create,
-              //       size: _width * 0.06,
-              //       color: Palette.blue4,
-              //     ),
-              //     onPressed: () {
-              //       Navigator.push(
-              //         context,
-              //         MaterialPageRoute(
-              //           builder: (context) => Share_writeScreen(),
-              //         ),
-              //       );
-              //     },
-              //   ),
-              // ),
               Column(
                 children: [
                   SizedBox(
@@ -239,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.soup_kitchen,
                   color: Colors.grey[850],
                 ), // 화면의 첫 부분
-                title: Text("cooking"),
+                title: Text("Cooking"),
                 onTap: () => {print("home!!")},
                 // trailing: Icon(Icons.add), // 화면의 끝 부분
               ),
@@ -248,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.fitness_center,
                   color: Colors.grey[850],
                 ), // 화면의 첫 부분
-                title: Text("fitness"),
+                title: Text("Fitness"),
                 onTap: () => {print("home!!")},
                 // trailing: Icon(Icons.add), // 화면의 끝 부분
               ),
@@ -257,7 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.mood,
                   color: Colors.grey[850],
                 ), // 화면의 첫 부분
-                title: Text("nonsense"),
+                title: Text("Nonsense"),
                 onTap: () => {print("home!!")},
                 // trailing: Icon(Icons.add), // 화면의 끝 부분
               ),
@@ -267,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.share,
                   color: Colors.grey[850],
                 ), // 화면의 첫 부분
-                title: Text("relationship"),
+                title: Text("Relationship"),
                 onTap: () => {print("home!!")},
                 // trailing: Icon(Icons.add), // 화면의 끝 부분
               ),
@@ -276,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.terminal,
                   color: Colors.grey[850],
                 ), // 화면의 첫 부분
-                title: Text("programming"),
+                title: Text("Programming"),
                 onTap: () => {print("home!!")},
                 // trailing: Icon(Icons.add), // 화면의 끝 부분
               ),
@@ -285,7 +263,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.language,
                   color: Colors.grey[850],
                 ), // 화면의 첫 부분
-                title: Text("language"),
+                title: Text("Language"),
                 onTap: () => {print("home!!")},
                 // trailing: Icon(Icons.add), // 화면의 끝 부분
               ),
@@ -295,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.brush,
                   color: Colors.grey[850],
                 ), // 화면의 첫 부분
-                title: Text("makeup"),
+                title: Text("Makeup"),
                 onTap: () => {print("home!!")},
                 // trailing: Icon(Icons.add), // 화면의 끝 부분
               ),
@@ -304,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.headphones,
                   color: Colors.grey[850],
                 ), // 화면의 첫 부분
-                title: Text("music"),
+                title: Text("Music"),
                 onTap: () => {print("home!!")},
                 // trailing: Icon(Icons.add), // 화면의 끝 부분
               ),
@@ -313,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.checkroom,
                   color: Colors.grey[850],
                 ), // 화면의 첫 부분
-                title: Text("fashion"),
+                title: Text("Fashion"),
                 onTap: () => {print("home!!")},
                 // trailing: Icon(Icons.add), // 화면의 끝 부분
               ),
@@ -323,7 +301,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.sports_esports,
                   color: Colors.grey[850],
                 ), // 화면의 첫 부분
-                title: Text("leisure"),
+                title: Text("Leisure"),
                 onTap: () => {print("home!!")},
                 // trailing: Icon(Icons.add), // 화면의 끝 부분
               ),
@@ -332,7 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.flight_takeoff,
                   color: Colors.grey[850],
                 ), // 화면의 첫 부분
-                title: Text("travel"),
+                title: Text("Travel"),
                 onTap: () => {print("home!!")},
                 // trailing: Icon(Icons.add), // 화면의 끝 부분
               ),
@@ -341,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Icons.more,
                   color: Colors.grey[850],
                 ), // 화면의 첫 부분
-                title: Text("etc..."),
+                title: Text("Etc.."),
                 onTap: () => {print("home!!")},
                 // trailing: Icon(Icons.add), // 화면의 끝 부분
               ),
@@ -372,25 +350,30 @@ class _HomeScreenState extends State<HomeScreen> {
                         Container(
                           width: _width * 1,
                           height: _height * 0.55,
-                          color: Palette.blue4,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  colors: [Palette.black, Palette.blue],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  stops: const [0.3, 0.9])),
                           child: Column(children: [
                             Column(
                               children: <Widget>[
-                                // const HeaderWidget(),
                                 InkWell(
                                   child: SizedBox(
                                     //썸네일 사진과는 상관x
-                                    height: _height * 0.53,
+                                    height: _height * 0.55,
+                                    width: _width * 0.9, //1번
                                     child: Swiper(
-                                      autoplay: true,
+                                      // autoplay: true,
                                       itemCount: planetInfo.length,
                                       itemWidth:
-                                          MediaQuery.of(context).size.width,
+                                          MediaQuery.of(context).size.width *
+                                              0.9,
                                       itemHeight:
                                           MediaQuery.of(context).size.height *
                                               0.7,
                                       layout: SwiperLayout.TINDER,
-                                      //하단 점 6개
                                       pagination: SwiperPagination(
                                           builder: DotSwiperPaginationBuilder(
                                               color: Colors.lightBlueAccent,
@@ -401,15 +384,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                         return InkWell(
                                           onTap: () {
                                             Navigator.push(
-                                                context,
-                                                PageRouteBuilder(
-                                                    pageBuilder: (context,
-                                                            animation,
-                                                            secondaryAnimation) =>
-                                                        DetailsPage(
-                                                            planetInfo:
-                                                                planetInfo[
-                                                                    index])));
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailsPage(
+                                                        planetInfo:
+                                                            planetInfo[index]),
+                                              ),
+                                            );
                                           },
                                           child: Stack(
                                             children: [
@@ -435,7 +417,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         .position,
                                                     child: SizedBox(
                                                       width: _width * 0.5,
-                                                      height: _height * 0.32,
+                                                      height: _height * 0.28,
                                                       child: Image.asset(
                                                           planetInfo[index]
                                                               .iconImage),
@@ -447,21 +429,59 @@ class _HomeScreenState extends State<HomeScreen> {
                                       },
                                     ),
                                   ),
-                                )
+                                ),
+                                // Text(data)
                               ],
                             ),
                           ]),
-                        ), //mypage box end//
+                        ), //Main post cardslider end
 
                         SizedBox(
                           height: 30,
                         ),
-                        Text(
-                          "More knowledge with more people to share",
-                          style: TextStyle(
-                              fontSize: 17,
-                              color: Palette.blue5,
-                              fontWeight: FontWeight.normal),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Text(
+                              "More",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Palette.blue5,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              " knowledge with,",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              "More",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Palette.blue5,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Text(
+                              " people to share",
+                              style: TextStyle(
+                                  fontSize: 17,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            SizedBox(
+                              width: 30,
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 15,
@@ -508,95 +528,118 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                 ),
-                                // ElevatedButton(
-                                //   onPressed: () {
-                                //     setState(() {
-                                //       inputText = inputController.text;
-                                //     });
-                                //   },
-                                //   child: Image(
-                                //     image:
-                                //         AssetImage('assets/images/shuttle.png'),
-                                //     width: _width * 0.08,
-                                //     color: Palette.blue,
-                                //   ),
-                                // ),
                               ],
                             ),
                           ),
                         ),
-                        hasAccessToken == true
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    "Share your knowledge!",
-                                    style: TextStyle(
-                                        fontSize: 14,
-                                        color: Palette.blue,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Palette.white,
-                                      shape: CircleBorder(),
-                                      side: BorderSide(
-                                        color: Palette.blue,
-                                        width: 2,
-                                      ),
-                                    ),
-                                    child: Icon(
-                                      Icons.create,
-                                      size: _width * 0.09,
-                                      color: Palette.blue4,
-                                    ),
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              Share_writeScreen(),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              )
-                            : SizedBox(),
                         SizedBox(
-                          height: 30,
+                          height: 40,
                         ),
-                        // ElevatedButton(
-                        //   style: ElevatedButton.styleFrom(
-                        //     backgroundColor: Palette.white,
-                        //     shape: CircleBorder(),
-                        //     side: BorderSide(
-                        //       color: Palette.blue,
-                        //       width: 2,
-                        //     ),
-                        //   ),
-                        //   child: Icon(
-                        //     Icons.create,
-                        //     size: _width * 0.09,
-                        //     color: Palette.blue4,
-                        //   ),
-                        //   onPressed: () {
-                        //     Navigator.push(
-                        //       context,
-                        //       MaterialPageRoute(
-                        //         builder: (context) => ShareScreen(
-                        //           id: 1,
-                        //         ),
-                        //       ),
-                        //     );
-                        //   },
-                        // ), //메인 포스트들
-                        // Main_Postbox(),
-                        // SizedBox(
-                        //   height: 6,
-                        // ),
-                        // Prevoius_Next_Button()
+                        /**여기 스터디 파트 시작 */
+                        Main_Rstudy(),
+
+                        /**Recent BorderPost 더미데이터 */
+                        SizedBox(
+                          height: 40,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              "Recent Boarder Post",
+                              style: TextStyle(
+                                  color: Palette.blue5,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'Avenir',
+                                  fontSize: 30),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(22, 5, 20, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Recent Boarder shortcuts",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                Icon(
+                                  Icons.chevron_right,
+                                  color: Palette.blue2,
+                                ),
+                              ],
+                            )),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        /**여기 스터디 파트 시작 VerticalDivider*/
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          child: const Divider(
+                            color: Palette.blue2,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                          child: Row(
+                            children: [
+                              SizedBox(
+                                width: 3,
+                              ),
+                              SizedBox(
+                                width: _width * 0.17,
+                                child: Text(
+                                  "Not Yet",
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                color: Palette.blue2,
+                                width: 1.5,
+                                height: 44,
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              SizedBox(
+                                width: _width * 0.52,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "There are no Posts.",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          color: Palette.blue5,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                          child: const Divider(
+                            color: Palette.blue2,
+                          ),
+                        ),
                       ],
+                    ),
+                    SizedBox(
+                      height: 40,
                     ),
                   ],
                 ),

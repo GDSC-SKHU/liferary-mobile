@@ -64,18 +64,59 @@ class WritePostController {
       "context": contextController.text,
       "video": "videoController.text"
     };
+    Image(path) async {
+      const url = 'http://api-liferary.duckdns.org/api/image/new?path=';
+      var prefs = await SharedPreferences.getInstance();
+      Map<String, String> headers = {
+        "accept": "application/json",
+        'Authorization': 'Bearer ${prefs.getString('accessToken')}',
+        "Content-Type": "multipart/form-data",
+      };
+      Map<String, String> data = {
+        "title": titleController.text,
+        "category": ValueManager.selectedValue,
+        "context": contextController.text,
+        "video": "videoController.text"
+      };
+
+      http.MultipartRequest request =
+          http.MultipartRequest('POST', Uri.parse(url));
+      //아래 2개는 연관 x
+      request.headers.addAll(headers);
+      request.fields.addAll(data);
+      for (var i = 0; i < selectedFile.count; i++) {
+        var file = await http.MultipartFile.fromPath(
+            'images', selectedFile.files[i].path!,
+            contentType: MediaType('image', 'png'));
+        request.files.add(file);
+        print(file.contentType);
+      }
+
+      // Send the request
+      http.StreamedResponse response = await request.send();
+
+      // Handle the response
+      if (response.statusCode == 200) {
+        // Request successful
+        print(await response.stream.bytesToString());
+        print(request.fields);
+      } else {
+        // Request failed
+        print(response.statusCode);
+      }
+    }
 
     http.MultipartRequest request =
         http.MultipartRequest('POST', Uri.parse(url));
+    //아래 2개는 연관 x
     request.headers.addAll(headers);
     request.fields.addAll(data);
-
     for (var i = 0; i < selectedFile.count; i++) {
       var file = await http.MultipartFile.fromPath(
           'images', selectedFile.files[i].path!,
           contentType: MediaType('image', 'png'));
       request.files.add(file);
-      // print(file.contentType);
+      print(file.contentType);
     }
 
     // Send the request

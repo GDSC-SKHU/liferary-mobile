@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:liferary/API/postController.dart';
 import 'package:liferary/screens/MyPage.dart';
 import 'package:liferary/screens/home.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:liferary/screens/login.dart';
+import 'package:liferary/screens/post_list.dart';
 import 'package:liferary/screens/setting.dart';
 import 'package:liferary/screens/share_write.dart';
 import 'firebase_options.dart';
@@ -49,10 +52,11 @@ class MyApp extends StatelessWidget {
             initialRoute: '/',
             routes: {
               '/': (context) => HomeScreen(),
-              '/share_post': (context) => Share_writeScreen(),
+              '/postlist': (context) => PostListScreen(),
               '/share_write': (context) => Share_writeScreen(),
               '/mypage': (context) => MyPage(),
               '/settings': (context) => Settings(),
+              '/plzlogin': (context) => LoginScreen(),
             },
             // initialRoute: "/setting",
             // routes: {

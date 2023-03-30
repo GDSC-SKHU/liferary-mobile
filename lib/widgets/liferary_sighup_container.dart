@@ -16,19 +16,8 @@ class SignupContainer extends StatelessWidget {
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center, children: children),
       decoration: BoxDecoration(
-          color: Palette.white,
-          borderRadius: BorderRadius.circular(10.0),
-          border: Border.all(color: Palette.blue, width: 3),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.grey,
-                blurRadius: 2.0,
-                spreadRadius: 1.0,
-                offset: Offset(
-                  1,
-                  1,
-                )),
-          ]),
+        color: Palette.white,
+      ),
     );
   }
 }

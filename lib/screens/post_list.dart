@@ -3,20 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:liferary/screens/home.dart';
 
-import '../Styles/Styles.dart';
 import '../utilities/palette.dart';
+import 'home.dart';
 
-class Settings extends StatefulWidget {
-  const Settings({super.key});
+class PostListScreen extends StatefulWidget {
+  const PostListScreen({super.key});
 
   @override
-  State<Settings> createState() => _SettingsState();
+  State<PostListScreen> createState() => _PostListState();
 }
 
-class _SettingsState extends State<Settings> {
-  int _selectedIndex = 4;
+class _PostListState extends State<PostListScreen> {
+  int _selectedIndex = 1;
   void _bottomnavigation(int index) {
     setState(() {
       _selectedIndex = index;
@@ -95,36 +94,36 @@ class _SettingsState extends State<Settings> {
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.95,
-                      height: 350,
-                      alignment: AlignmentDirectional.topStart,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 1, color: Palette.blue),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.white,
-                                blurRadius: 2.0,
-                                spreadRadius: 1.0,
-                                offset: Offset(
-                                  1,
-                                  1,
-                                )),
-                          ]),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Center(
-                            child: Text(
-                              "Not Yet",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 50,
-                                  color: Palette.blue5),
-                            ),
-                          ),
-                        ],
+                    Text(
+                      "Main Posts",
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 50,
+                          color: Palette.blue5),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10, 30, 10, 10),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 350,
+                        alignment: AlignmentDirectional.topStart,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(width: 1, color: Palette.blue),
+                            boxShadow: [
+                              BoxShadow(
+                                  color: Colors.white,
+                                  blurRadius: 2.0,
+                                  spreadRadius: 1.0,
+                                  offset: Offset(
+                                    1,
+                                    1,
+                                  )),
+                            ]),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [],
+                        ),
                       ),
                     ),
                   ],

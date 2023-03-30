@@ -19,31 +19,37 @@ class _CreateModalState extends State<CreateModal> {
     final _width = MediaQuery.of(context).size.width;
     return Column(
       children: [
-        TextButton(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => CreateStudyScreen()),
-            );
-          },
-          child: Container(
-            // alignment: Alignment.center,
-            //comment
-            width: _width * 0.4,
-            height: _height * 0.05,
-            decoration: BoxDecoration(
-              color: Palette.blue,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "create study",
-                  style: TextStyle(fontSize: 17, color: Palette.white),
-                ),
-              ],
-            ),
+        Container(
+          width: _width * 0.4,
+          height: _height * 0.05,
+          decoration: BoxDecoration(
+            border: Border.all(color: Palette.blue2, width: 1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 8,
+              ),
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CreateStudyScreen()),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.school,
+                    size: _width * 0.07,
+                    color: Palette.blue2,
+                  )),
+              Text(
+                "Create study",
+                style: TextStyle(fontSize: 15, color: Palette.blue2),
+              ),
+            ],
           ),
         ),
       ],

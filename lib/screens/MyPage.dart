@@ -28,7 +28,7 @@ class _MyPageState extends State<MyPage> {
         Navigator.pushNamed(context, '/');
         break;
       case 1:
-        Navigator.pushNamed(context, '/share_post');
+        Navigator.pushNamed(context, '/postlist');
         break;
       case 2:
         Navigator.pushNamed(context, '/share_write');
@@ -81,8 +81,8 @@ class _MyPageState extends State<MyPage> {
           backgroundColor: Palette.blue,
           items: const <TabItem>[
             TabItem(icon: Icons.home, title: 'Home'),
-            TabItem(icon: Icons.format_list_bulleted, title: 'Full View'),
-            TabItem(icon: Icons.add, title: 'publish'),
+            TabItem(icon: Icons.format_list_bulleted, title: 'Posts'),
+            TabItem(icon: Icons.add, title: 'Publish'),
             TabItem(icon: Icons.person, title: 'My Page'),
             TabItem(icon: Icons.settings, title: 'Settings'),
           ],

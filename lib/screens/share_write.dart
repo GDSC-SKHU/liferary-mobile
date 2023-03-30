@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
@@ -21,18 +23,18 @@ class Share_writeScreen extends StatefulWidget {
 class _Share_writeScreenState extends State<Share_writeScreen> {
   final SearchController = TextEditingController();
   final List<String> items = [
-    "cooking",
-    "fitness",
-    "nonsense",
-    "relationship",
-    "programming",
-    "language",
-    "makeup",
-    "music",
-    "fashion",
-    "leisure",
-    "travel",
-    "etc.."
+    "Cooking",
+    "Fitness",
+    "Nonsense",
+    "Relationship",
+    "Programming",
+    "Language",
+    "Makeup",
+    "Music",
+    "Fashion",
+    "Leisure",
+    "Travel",
+    "Etc.."
   ];
   String? selectedValue;
 
@@ -49,11 +51,6 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
     }
   }
 
-  void test() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final hasAccessToken = prefs.getBool('hasAccessToken') ?? false;
-  }
-
   int _selectedIndex = 2;
   void _bottomnavigation(int index) {
     setState(() {
@@ -65,7 +62,7 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
         Navigator.pushNamed(context, '/');
         break;
       case 1:
-        Navigator.pushNamed(context, '/share_post');
+        Navigator.pushNamed(context, '/postlist');
         break;
       case 2:
         Navigator.pushNamed(context, '/share_write');
@@ -88,8 +85,6 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
 
   @override
   void dispose() {
-    WritePostController.titleController.text;
-    //_writePostController.contextController.text;
     super.dispose();
   }
 
@@ -104,8 +99,8 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
           backgroundColor: Palette.blue,
           items: const <TabItem>[
             TabItem(icon: Icons.home, title: 'Home'),
-            TabItem(icon: Icons.format_list_bulleted, title: 'Full View'),
-            TabItem(icon: Icons.add, title: 'publish'),
+            TabItem(icon: Icons.format_list_bulleted, title: 'Posts'),
+            TabItem(icon: Icons.add, title: 'Publish'),
             TabItem(icon: Icons.person, title: 'My Page'),
             TabItem(icon: Icons.settings, title: 'Settings'),
           ],
@@ -163,9 +158,9 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                             Text(
                               "Tag   :   ",
                               style: TextStyle(
-                                color: Palette.blue4,
+                                color: Palette.blue5,
                                 fontSize: 20,
-                                fontWeight: FontWeight.bold,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
                             Center(
@@ -177,7 +172,7 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                                       Icon(
                                         Icons.list,
                                         size: 16,
-                                        color: Palette.white,
+                                        color: Palette.blue2,
                                       ),
                                       SizedBox(
                                         width: 4,
@@ -188,7 +183,7 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                                           style: TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold,
-                                            color: Colors.lightGreenAccent,
+                                            color: Palette.blue2,
                                           ),
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -202,8 +197,8 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                                               item,
                                               style: const TextStyle(
                                                 fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
+                                                fontWeight: FontWeight.w500,
+                                                color: Palette.blue2,
                                               ),
                                               overflow: TextOverflow.ellipsis,
                                             ),
@@ -221,20 +216,17 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                                     padding: const EdgeInsets.only(
                                         left: 14, right: 14),
                                     decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(14),
-                                      // border: Border.all(
-                                      //   color: Colors.black26,
-                                      // ),
-                                      color: Palette.blue2,
+                                      border: Border.all(
+                                          color: Palette.blue2, width: 1),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    elevation: 2,
                                   ),
                                   iconStyleData: const IconStyleData(
                                     icon: Icon(
                                       Icons.arrow_drop_down,
                                     ),
-                                    iconSize: 30,
-                                    iconEnabledColor: Colors.lightGreenAccent,
+                                    iconSize: 28,
+                                    iconEnabledColor: Colors.lightBlueAccent,
                                     iconDisabledColor: Colors.grey,
                                   ),
                                   dropdownStyleData: DropdownStyleData(
@@ -243,7 +235,7 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                                     padding: null,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(14),
-                                      color: Palette.blue3,
+                                      color: Palette.white,
                                     ),
                                     elevation: 8,
                                     offset: const Offset(30, -5),
@@ -265,36 +257,50 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 15, 15, 10),
-                          child: Container(
-                            width: _width * 0.9,
-                            decoration: BoxDecoration(
-                              color: Palette.white,
-                              borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Palette.blue, width: 2),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 25,
                             ),
-                            child: TextField(
-                              controller: WritePostController.titleController,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Please enter your title.',
-                                  labelStyle: TextStyle(color: Palette.blue2)),
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
+                            Container(
+                              width: _width * 0.6,
+                              child: TextField(
+                                controller: WritePostController.titleController,
+                                decoration: InputDecoration(
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Palette.blue3),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Palette.blue5, width: 2),
+                                  ),
+                                  hintText: 'Please enter the title.',
+                                ),
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                              ),
                             ),
-                          ),
+                          ],
+                        ),
+
+                        SizedBox(
+                          height: 10,
                         ),
 
                         Padding(
-                          padding: const EdgeInsets.all(15),
+                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                           child: Container(
                             width: _width * 0.9,
                             height: _height * 0.3,
                             decoration: BoxDecoration(
                               color: Palette.white,
                               borderRadius: BorderRadius.circular(10),
-                              border: Border.all(color: Palette.blue, width: 2),
+                              border:
+                                  Border.all(color: Palette.blue2, width: 1),
                             ),
                             child: TextField(
                               controller: WritePostController.contextController,
@@ -302,7 +308,7 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                               autofocus: true,
                               decoration: InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: 'Write your tips contents',
+                                  hintText: ' Write your tips contents',
                                   labelStyle: TextStyle(color: Palette.blue2)),
                               keyboardType: TextInputType.multiline,
                               maxLines: null,
@@ -314,36 +320,39 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                           //files
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 25, 10),
-                              child: Container(
-                                //comment
-                                width: _width * 0.23,
-                                height: _height * 0.05,
-                                decoration: BoxDecoration(
-                                  color: Palette.blue5,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    IconButton(
-                                        onPressed: getFile,
-                                        icon: Icon(
-                                          Icons.upload_file,
-                                          size: _width * 0.075,
-                                          color: Palette.white,
-                                        )),
-                                    Text(
-                                      "Files",
-                                      style: TextStyle(
-                                          fontSize: 14, color: Palette.white),
-                                    ),
-                                  ],
-                                ),
+                            Container(
+                              width: _width * 0.23,
+                              height: _height * 0.05,
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Palette.blue2, width: 1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  IconButton(
+                                      onPressed: getFile,
+                                      icon: Icon(
+                                        Icons.upload_file,
+                                        size: _width * 0.075,
+                                        color: Palette.blue2,
+                                      )),
+                                  Text(
+                                    "Files",
+                                    style: TextStyle(
+                                        fontSize: 14, color: Palette.blue2),
+                                  ),
+                                ],
                               ),
                             ),
+                            SizedBox(
+                              width: 20,
+                            ),
                           ],
+                        ),
+                        SizedBox(
+                          height: 20,
                         ),
 
                         Column(
@@ -356,67 +365,86 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                                 SizedBox(
                                   width: _width * 0.09,
                                 ),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    //comment
-                                    width: _width * 0.4,
-                                    height: _height * 0.05,
-                                    decoration: BoxDecoration(
-                                        color: Palette.blue,
-                                        borderRadius: BorderRadius.circular(10),
-                                        border:
-                                            Border.all(color: Palette.blue4)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "youtube",
-                                          style: TextStyle(
-                                              fontSize: 17,
-                                              color: Palette.white),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                              child: GestureDetector(
-                                child: Container(
+                                Container(
+                                  // alignment: Alignment.center,
+                                  //comment
                                   width: _width * 0.4,
                                   height: _height * 0.05,
                                   decoration: BoxDecoration(
-                                      color: Palette.blue,
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all(color: Palette.blue4)),
+                                    border: Border.all(
+                                        color: Palette.blue2, width: 1),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
+                                      SizedBox(
+                                        width: 25,
+                                      ),
+                                      IconButton(
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HomeScreen()),
+                                            );
+                                          },
+                                          icon: Icon(
+                                            Icons.play_circle_outline,
+                                            size: _width * 0.07,
+                                            color: Palette.blue2,
+                                          )),
                                       Text(
-                                        "registration",
+                                        "Youtube",
                                         style: TextStyle(
-                                            fontSize: 17, color: Palette.white),
+                                            fontSize: 15, color: Palette.blue2),
                                       ),
                                     ],
                                   ),
                                 ),
-                                onTap: () {
-                                  WritePostController.postWrite();
-                                  print(WritePostController
-                                      .contextController.text
-                                      .toString());
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: ((context) =>
-                                              HomeScreen())));
-                                },
+                              ],
+                            ),
+                            SizedBox(
+                              height: 30,
+                            ),
+                            Container(
+                              width: _width * 0.4,
+                              height: _height * 0.05,
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Palette.blue2, width: 1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  IconButton(
+                                      onPressed: () {
+                                        WritePostController.postWrite();
+                                        print(WritePostController
+                                            .contextController.text
+                                            .toString());
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    HomeScreen())));
+                                      },
+                                      icon: Icon(
+                                        Icons.menu_book,
+                                        size: _width * 0.07,
+                                        color: Palette.blue2,
+                                      )),
+                                  Text(
+                                    "Registration",
+                                    style: TextStyle(
+                                        fontSize: 15, color: Palette.blue2),
+                                  ),
+                                ],
                               ),
                             ),
                           ],

@@ -38,11 +38,14 @@ class _SignupScreenState extends State<SignupScreen> {
         child: Center(
           child: Container(
               child: Column(children: [
+            SizedBox(
+              height: 70,
+            ),
             Padding(
-              padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Container(
                 width: 300,
-                height: 250,
+                height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/images/logo.png'),
@@ -52,90 +55,97 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: SignupContainer(children: [
-                Text(
-                  'SIGN UP',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35,
-                    color: Palette.blue,
-                  ),
-                ),
-
+              child: Column(children: [
                 //email
-                Container(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 5, 15, 15),
-                    child: TextField(
-                      controller: signinController.emailController,
-                      decoration: InputDecoration(
-                          icon: Icon(Icons.badge),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide: BorderSide(
-                                color: Palette.blue2,
-                                width: 1.0,
-                              )),
-                          labelText: 'Email',
-                          labelStyle: TextStyle(color: Palette.blue2)),
-                    ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+                  child: TextField(
+                    controller: signinController.emailController,
+                    decoration: InputDecoration(
+                        icon: Icon(Icons.badge, color: Palette.blue5),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Palette.blue5),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Palette.blue5, width: 2),
+                        ),
+                        labelText: 'Email',
+                        labelStyle: TextStyle(color: Palette.blue5)),
+                    keyboardType: TextInputType.emailAddress,
+                    maxLines: null,
                   ),
                 ),
-
+                SizedBox(
+                  height: 20,
+                ),
                 //nickname
                 Padding(
-                  padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
                   child: TextField(
                     controller: signinController.nicknameController,
                     decoration: InputDecoration(
-                        icon: Icon(Icons.account_circle),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                              color: Palette.blue2,
-                              width: 1.0,
-                            )),
+                        icon: Icon(Icons.account_circle, color: Palette.blue5),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Palette.blue5),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Palette.blue5, width: 2),
+                        ),
                         labelText: 'Nick_name',
-                        labelStyle: TextStyle(color: Palette.blue2)),
+                        labelStyle: TextStyle(color: Palette.blue5)),
+                    keyboardType: TextInputType.emailAddress,
+                    maxLines: null,
                   ),
                 ),
-
+                SizedBox(
+                  height: 20,
+                ),
                 //password
                 Padding(
-                  padding: EdgeInsets.fromLTRB(15, 5, 15, 5),
+                  padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
                   child: TextField(
                     controller: signinController.passwordController,
                     decoration: InputDecoration(
-                        icon: Icon(Icons.key),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                              color: Palette.blue2,
-                              width: 1.0,
-                            )),
+                        icon: Icon(Icons.key, color: Palette.blue5),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Palette.blue5),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Palette.blue5, width: 2),
+                        ),
                         labelText: 'Password',
-                        labelStyle: TextStyle(color: Palette.blue2)),
+                        labelStyle: TextStyle(color: Palette.blue5)),
+                    keyboardType: TextInputType.multiline,
                     obscureText: true,
                   ),
                 ),
-
-                //pw check
+                SizedBox(
+                  height: 20,
+                ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(15, 5, 15, 20),
+                  padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
                   child: TextField(
                     controller: signinController.checkedPasswordController,
                     decoration: InputDecoration(
-                        icon: Icon(Icons.key),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide(
-                              color: Palette.blue2,
-                              width: 1.0,
-                            )),
+                        icon: Icon(Icons.key, color: Palette.blue5),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Palette.blue5),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Palette.blue5, width: 2),
+                        ),
                         labelText: 'Repeated_pw',
-                        labelStyle: TextStyle(color: Palette.blue2)),
+                        labelStyle: TextStyle(color: Palette.blue5)),
+                    keyboardType: TextInputType.multiline,
                     obscureText: true,
                   ),
+                ),
+                SizedBox(
+                  height: 60,
                 ),
 
                 //Success button
@@ -176,53 +186,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     }
                   },
                 ),
-                // InkWell(
-                //   child: Center(
-                //       child: Container(
-                //           width: _width * 0.4,
-                //           height: _height * 0.04,
-                //           decoration: BoxDecoration(
-                //             color: Palette.blue,
-                //             borderRadius: BorderRadius.circular(10),
-                //           ),
-                //           child: Center(
-                //             child: Text(
-                //               "Success",
-                //               style:
-                //                   TextStyle(fontSize: 20, color: Palette.white),
-                //             ),
-                //           ))),
-                //   onTap: () {
-                //     Navigator.pop(context);
-                //   },
-                // )
-              ]
-                  //회원가입하기 버튼
-                  // Center(
-                  //   child: ra,
-                  // child: Container(
-                  //   child: IconButton(
-                  //     icon: Icon(
-                  //       Icons.login_outlined,
-                  //       color: Palette.white,
-                  //     ),
-                  //     onPressed: () async {
-                  //       if (await authenticator.authentication(
-                  //               userNameController.text, passwordController.text) ==
-                  //           true) {
-                  //         Navigator.pushNamed(context, "/home");
-                  //       } else {
-                  //         print("로그인 실패");
-                  //       }
-                  //     },
-                  //   ),
-                  //   decoration: BoxDecoration(
-                  //       borderRadius: BorderRadius.circular(10.0),
-                  //       color: Palette.darkGrey),
-                  // ),
-                  // )
-
-                  ),
+              ]),
             )
           ])),
         ),

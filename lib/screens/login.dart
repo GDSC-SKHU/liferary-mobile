@@ -79,6 +79,9 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Center(
               child: Container(
         child: Column(children: [
+          SizedBox(
+            height: 100,
+          ),
           Container(
             width: 300,
             height: 250,
@@ -89,52 +92,43 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
 
-          Text(
-            'SIGN IN',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 35,
-              color: Palette.blue,
-            ),
-          ),
-
           //email
-          Container(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(15, 30, 15, 15),
-              child: TextField(
-                controller: LoginController.emailController,
-                decoration: InputDecoration(
-                    icon: Icon(Icons.account_circle),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: BorderSide(
-                          color: Palette.blue2,
-                          width: 1.0,
-                        )),
-                    labelText: 'Email',
-                    labelStyle: TextStyle(color: Palette.blue2)),
-                keyboardType: TextInputType.emailAddress,
-                maxLines: null,
-              ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+            child: TextField(
+              controller: LoginController.emailController,
+              decoration: InputDecoration(
+                  icon: Icon(Icons.account_circle, color: Palette.blue5),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Palette.blue5),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Palette.blue5, width: 2),
+                  ),
+                  labelText: 'Email',
+                  labelStyle: TextStyle(color: Palette.blue5)),
+              keyboardType: TextInputType.emailAddress,
+              maxLines: null,
             ),
           ),
+          SizedBox(
+            height: 20,
+          ),
 
-          //password
           Padding(
-            padding: EdgeInsets.fromLTRB(15, 5, 15, 0),
+            padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
             child: TextField(
               controller: LoginController.passwordController,
               decoration: InputDecoration(
-                  icon: Icon(Icons.password),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(
-                        color: Palette.blue2,
-                        width: 1.0,
-                      )),
+                  icon: Icon(Icons.password, color: Palette.blue5),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Palette.blue5),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Palette.blue5, width: 2),
+                  ),
                   labelText: 'Password',
-                  labelStyle: TextStyle(color: Palette.blue2)),
+                  labelStyle: TextStyle(color: Palette.blue5)),
               keyboardType: TextInputType.multiline,
               obscureText: true,
             ),
@@ -145,16 +139,19 @@ class _LoginScreenState extends State<LoginScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    signInWithGoogle();
-                  } catch (e) {
-                    print("error $e");
-                  }
-                },
-                child: Image(
-                    image: AssetImage("assets/images/google.png"), width: 30.0),
+              SizedBox(
+                width: 50,
+                child: IconButton(
+                  icon: Image.asset("assets/images/google.png"),
+                  iconSize: 2,
+                  onPressed: () async {
+                    try {
+                      signInWithGoogle();
+                    } catch (e) {
+                      print("error $e");
+                    }
+                  },
+                ),
               ),
               SizedBox(
                 width: 20,
@@ -171,12 +168,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: Text(
                     "Sign up here",
-                    style: TextStyle(color: Palette.blue),
+                    style: TextStyle(color: Palette.blue5),
                   )),
             ],
           ),
           SizedBox(
-            height: 15,
+            height: 25,
           ),
           InkWell(
             child: Center(
@@ -184,7 +181,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: _width * 0.4,
                     height: _height * 0.04,
                     decoration: BoxDecoration(
-                      color: Palette.blue,
+                      color: Palette.blue2,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(

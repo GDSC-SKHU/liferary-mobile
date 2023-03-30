@@ -20,7 +20,7 @@ class CustomCard extends StatelessWidget {
     return SizedBox(
       height: 400,
       child: Card(
-        elevation: 6,
+        elevation: 5,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32)),
         color: Colors.white,
         child: Padding(
@@ -35,7 +35,7 @@ class CustomCard extends StatelessWidget {
                     color: Palette.blue5,
                     fontWeight: FontWeight.w900,
                     fontFamily: 'Avenir',
-                    fontSize: 50),
+                    fontSize: 30),
                 textAlign: TextAlign.left,
               ),
               Row(
@@ -43,7 +43,7 @@ class CustomCard extends StatelessWidget {
                   SizedBox(
                     width: 30,
                     child: Icon(
-                      Icons.more,
+                      Icons.clear,
                       color: Palette.blue,
                     ),
                   ),
@@ -61,7 +61,7 @@ class CustomCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(
-                height: 24,
+                height: 10,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
