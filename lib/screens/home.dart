@@ -352,7 +352,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: _height * 0.55,
                           decoration: BoxDecoration(
                               gradient: LinearGradient(
-                                  colors: [Palette.black, Palette.blue],
+                                  colors: [
+                                    Color.fromARGB(255, 148, 156, 176),
+                                    Palette.blue2
+                                  ],
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
                                   stops: const [0.3, 0.9])),
