@@ -272,7 +272,7 @@ class _Community_MypageScreenState extends State<Community_MypageScreen> {
                                     width: 10,
                                   ),
                                   Text(
-                                    "Let's explore how to use...",
+                                    "Pay attention to the movement...",
                                     style: TextStyle(
                                         fontSize: 10,
                                         color: Palette.blue2,
@@ -285,15 +285,15 @@ class _Community_MypageScreenState extends State<Community_MypageScreen> {
                                   Text(
                                     "yaho0919",
                                     style: TextStyle(
-                                        fontSize: 12, color: Colors.black38),
+                                        fontSize: 10, color: Colors.black38),
                                   ),
                                   SizedBox(
                                     width: 10,
                                   ),
                                   Text(
-                                    "03/31/2023 00:36",
+                                    "03/31/2023 02:47",
                                     style: TextStyle(
-                                        fontSize: 12, color: Colors.black38),
+                                        fontSize: 10, color: Colors.black38),
                                   ),
                                 ],
                               ),

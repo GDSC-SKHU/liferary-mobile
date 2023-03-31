@@ -41,9 +41,9 @@ List<PlanetInfo> planetInfo = [
         'assets/images/Icon.png',
       ]),
   PlanetInfo(2,
-      name: 'How to Cook Chicken',
-      iconImage: 'assets/images/chicken.png',
-      category: "Cooking",
+      name: 'How to use Google Meet? - Host',
+      iconImage: 'assets/images/googlemeet.png',
+      category: "Etc..",
       category_icon: "not yet",
       description:
           "Zipping around the sun in only 88 days, Mercury is the closest planet to the sun, and it's also the smallest, only a little bit larger than Earth's moon. Because its so close to the sun (about two-fifths the distance between Earth and the sun), Mercury experiences dramatic changes in its day and night temperatures: Day temperatures can reach a scorching 840  F (450 C), which is hot enough to melt lead. Meanwhile on the night side, temperatures drop to minus 290 F (minus 180 C).",
@@ -53,8 +53,8 @@ List<PlanetInfo> planetInfo = [
         'https://earthsky.org/upl/2018/09/PIA16853-800x450.jpg'
       ]),
   PlanetInfo(3,
-      name: 'How to Cook Ramen',
-      iconImage: 'assets/images/lamen.png',
+      name: 'How to cook delicious Korean food, Bulgogi!',
+      iconImage: 'assets/images/bulgogi.png',
       category: "Cooking",
       category_icon: "not yet",
       description:
@@ -65,10 +65,10 @@ List<PlanetInfo> planetInfo = [
         'https://earthsky.org/upl/2018/09/PIA16853-800x450.jpg'
       ]),
   PlanetInfo(4,
-      name: 'How to Cook Rice',
-      iconImage: 'assets/images/rice.png',
-      category: "Cooking",
-      category_icon: "",
+      name: 'Java! Powerful programming language.',
+      iconImage: 'assets/images/java.png',
+      category: "Programming",
+      category_icon: "not yet",
       description:
           "Zipping around the sun in only 88 days, Mercury is the closest planet to the sun, and it's also the smallest, only a little bit larger than Earth's moon. Because its so close to the sun (about two-fifths the distance between Earth and the sun), Mercury experiences dramatic changes in its day and night temperatures: Day temperatures can reach a scorching 840  F (450 C), which is hot enough to melt lead. Meanwhile on the night side, temperatures drop to minus 290 F (minus 180 C).",
       images: [
@@ -77,10 +77,10 @@ List<PlanetInfo> planetInfo = [
         'https://earthsky.org/upl/2018/09/PIA16853-800x450.jpg'
       ]),
   PlanetInfo(5,
-      name: 'How to Cook SmoreDeep',
-      iconImage: 'assets/images/smore.png',
-      category: "Cooking",
-      category_icon: "not yet",
+      name: 'What is OOP?',
+      iconImage: 'assets/images/oop.png',
+      category: "Programming",
+      category_icon: "",
       description:
           "Zipping around the sun in only 88 days, Mercury is the closest planet to the sun, and it's also the smallest, only a little bit larger than Earth's moon. Because its so close to the sun (about two-fifths the distance between Earth and the sun), Mercury experiences dramatic changes in its day and night temperatures: Day temperatures can reach a scorching 840  F (450 C), which is hot enough to melt lead. Meanwhile on the night side, temperatures drop to minus 290 F (minus 180 C).",
       images: [

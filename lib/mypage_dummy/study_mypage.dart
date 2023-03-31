@@ -249,9 +249,64 @@ class _Study_MypageScreenState extends State<Study_MypageScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "There's no comment.",
-                          style: TextStyle(fontSize: 20, color: Palette.black),
+                        Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: _width * 0.9,
+                                height: 1,
+                                color: Palette.blue,
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  Text(
+                                    "1",
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.black38),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "Let's explore how to use...",
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        color: Palette.blue2,
+                                        fontWeight: FontWeight.bold),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  SizedBox(
+                                    width: 12,
+                                  ),
+                                  Text(
+                                    "yaho0919",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.black38),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    "03/31/2023 00:36",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.black38),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Container(
+                                width: _width * 0.9,
+                                height: 1,
+                                color: Palette.blue,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
