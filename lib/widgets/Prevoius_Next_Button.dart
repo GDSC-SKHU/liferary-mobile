@@ -18,17 +18,17 @@ class _Prevoius_Next_ButtonState extends State<Prevoius_Next_Button> {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Container(
-      width: MediaQuery.of(context).size.width * 0.7,
+      width: MediaQuery.of(context).size.width * 0.9,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           GestureDetector(
             child: Container(
               alignment: Alignment.center,
-              width: _width * 0.34,
+              width: _width * 0.36,
               height: 40,
               decoration: BoxDecoration(
-                  color: Palette.blue, borderRadius: BorderRadius.circular(25)),
+                  color: Palette.blue, borderRadius: BorderRadius.circular(30)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -70,13 +70,16 @@ class _Prevoius_Next_ButtonState extends State<Prevoius_Next_Button> {
               //   });
             },
           ),
+          SizedBox(
+            width: 20,
+          ),
           GestureDetector(
             child: Container(
               alignment: Alignment.center,
-              width: _width * 0.34,
+              width: _width * 0.36,
               height: 40,
               decoration: BoxDecoration(
-                  color: Palette.blue, borderRadius: BorderRadius.circular(25)),
+                  color: Palette.blue, borderRadius: BorderRadius.circular(30)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

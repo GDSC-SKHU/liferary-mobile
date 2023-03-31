@@ -39,7 +39,7 @@ class _Main_PostboxState extends State<Main_Postbox> {
                       height: _height * 0.15,
                       decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: AssetImage('assets/images/logo.png'),
+                            image: AssetImage('assets/images/Icon.png'),
                           ),
                           color: Palette.white,
                           borderRadius: BorderRadius.circular(10.0),
@@ -74,6 +74,21 @@ class _Main_PostboxState extends State<Main_Postbox> {
                                     1,
                                   )),
                             ]),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "제목",
+                              textAlign: TextAlign.start,
+                            ),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              "23.03.30",
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
@@ -203,7 +218,8 @@ class _Main_PostboxState extends State<Main_Postbox> {
                         height: _height * 0.15,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage('assets/images/logo.png'),
+                              image:
+                                  AssetImage('assets/images/WriteScreen.png'),
                             ),
                             color: Palette.white,
                             borderRadius: BorderRadius.circular(10.0),
@@ -261,7 +277,7 @@ class _Main_PostboxState extends State<Main_Postbox> {
                         height: _height * 0.15,
                         decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage('assets/images/logo.png'),
+                              image: AssetImage('assets/images/MainScreen.png'),
                             ),
                             color: Palette.white,
                             borderRadius: BorderRadius.circular(10.0),
@@ -358,7 +374,98 @@ class _Main_PostboxState extends State<Main_Postbox> {
               ],
             ),
           ],
-        )
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(
+              children: [
+                /**메인포스트 리스트 위젯 */
+                Container(
+                  width: _width * 0.75,
+                  height: _height * 0.2,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/logo.png'),
+                      ),
+                      color: Palette.white,
+                      borderRadius: BorderRadius.circular(5.0),
+                      // border: Border.all(color: Palette.blue, width: 3),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey,
+                          blurRadius: 1.0,
+                          spreadRadius: 1.0,
+                        ),
+                      ]),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: Container(
+                    width: _width * 0.75,
+                    height: _height * 0.03,
+                    decoration: BoxDecoration(
+                        color: Palette.white,
+                        borderRadius: BorderRadius.circular(5.0),
+                        // border: Border.all(color: Palette.blue, width: 3),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey,
+                            blurRadius: 1.0,
+                            spreadRadius: 1.0,
+                          ),
+                        ]),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "yaho0919?",
+                          style: TextStyle(
+                              fontSize: 10, fontWeight: FontWeight.w400),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Container(
+                          color: Palette.blue2,
+                          width: 1,
+                          height: 18,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "HOW About Riferary?",
+                          style: TextStyle(
+                              fontSize: 10, fontWeight: FontWeight.w400),
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Container(
+                          color: Palette.blue2,
+                          width: 1,
+                          height: 18,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "23.03.30",
+                          style: TextStyle(
+                              fontSize: 10, fontWeight: FontWeight.w400),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 50,
+            ),
+          ],
+        ),
       ],
     );
   }

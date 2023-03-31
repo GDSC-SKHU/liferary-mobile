@@ -1,26 +1,23 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:liferary/API/authController.dart';
-import 'package:liferary/Styles/ColorStyles.dart';
-import 'package:liferary/Styles/Styles.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:liferary/mypage_dummy/community_mypage.dart';
-import 'package:liferary/mypage_dummy/knowledge_dummy.dart';
-import 'package:liferary/screens/login.dart';
-import 'package:liferary/utilities/palette.dart';
 
-import '../mypage_dummy/study_mypage.dart';
-import 'createstudy.dart';
-import 'home.dart';
+import '../screens/MyPage.dart';
+import '../screens/home.dart';
+import '../utilities/palette.dart';
+import 'knowledge_dummy.dart';
 
-class MyPage extends StatefulWidget {
-  const MyPage({super.key});
+class Study_MypageScreen extends StatefulWidget {
+  const Study_MypageScreen({super.key});
 
   @override
-  State<MyPage> createState() => _MyPageState();
+  State<Study_MypageScreen> createState() => _Study_MypageScreenState();
 }
 
-class _MyPageState extends State<MyPage> {
+class _Study_MypageScreenState extends State<Study_MypageScreen> {
   int _selectedIndex = 3;
   void _bottomnavigation(int index) {
     setState(() {
@@ -114,7 +111,7 @@ class _MyPageState extends State<MyPage> {
                           width: _width * 0.23,
                           height: _height * 0.09,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Palette.blue5, width: 2),
+                            border: Border.all(color: Palette.blue3, width: 1),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(
@@ -179,7 +176,7 @@ class _MyPageState extends State<MyPage> {
                           width: _width * 0.23,
                           height: _height * 0.09,
                           decoration: BoxDecoration(
-                            border: Border.all(color: Palette.blue3, width: 1),
+                            border: Border.all(color: Palette.blue5, width: 2),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Row(
@@ -252,57 +249,13 @@ class _MyPageState extends State<MyPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "E-mail",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Palette.blue2,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(
-                                    width: 12,
-                                  ),
-                                  Text(
-                                    "yaho0919@gmail.com",
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.black38),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    "Nickname",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Palette.blue2,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  SizedBox(
-                                    width: 12,
-                                  ),
-                                  Text(
-                                    "yaho0919",
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.black38),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                        Text(
+                          "There's no comment.",
+                          style: TextStyle(fontSize: 20, color: Palette.black),
                         ),
                       ],
                     ),
-                  ),
+                  )
                 ],
               ));
             },

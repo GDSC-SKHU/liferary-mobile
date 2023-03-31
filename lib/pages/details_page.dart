@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:liferary/utilities/palette.dart';
+import 'package:liferary/widgets/createstudy_modal.dart';
 
 import '../model/planet_info.dart';
+import '../screens/createstudy.dart';
 
 class DetailsPage extends StatelessWidget {
   final PlanetInfo planetInfo;
@@ -39,7 +41,7 @@ class DetailsPage extends StatelessWidget {
                           textAlign: TextAlign.left,
                         ),
                         SizedBox(
-                          height: 10,
+                          height: 30,
                         ),
                         //본문
                         Row(
@@ -55,9 +57,11 @@ class DetailsPage extends StatelessWidget {
                               width: 10,
                             ),
                             Text(
-                              "etc..",
-                              style:
-                                  TextStyle(fontSize: 20, color: Palette.blue),
+                              planetInfo.category,
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
+                                  color: Palette.blue2),
                               textAlign: TextAlign.left,
                             ),
                           ],
@@ -75,8 +79,6 @@ class DetailsPage extends StatelessWidget {
                         //details 본문
                         Text(
                           planetInfo.description,
-                          maxLines: 5,
-                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w500,
@@ -123,7 +125,8 @@ class DetailsPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(32)),
                             child: AspectRatio(
                                 aspectRatio: 1,
-                                child: Image.network(
+                                /**게시글 생성이후 network부분  assets로 바꾸기*/
+                                child: Image.asset(
                                   planetInfo.images[index],
                                   fit: BoxFit.cover,
                                 )),
@@ -131,50 +134,231 @@ class DetailsPage extends StatelessWidget {
                         },
                       ),
                     ),
-                  )
-                ],
-              ),
-            ),
-            Positioned(
-                right: 20,
-                child: Hero(
-                  tag: planetInfo.position,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                    child: Divider(
+                      color: Colors.black38,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30.0, bottom: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Liferary",
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
+                          'Youtube',
                           style: TextStyle(
-                              fontSize: 25,
+                              fontSize: 26,
                               fontWeight: FontWeight.w600,
                               color: Palette.blue4),
+                          textAlign: TextAlign.left,
                         ),
                         SizedBox(
-                          width: 20,
+                          height: 10,
                         ),
-                        SizedBox(
-                          width: _width * 0.15,
-                          child: Image.asset('assets/images/Icon.png'),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 10,
+                            ),
+                            SizedBox(
+                              width: 300,
+                              child: Image.asset(
+                                'assets/images/mainpostyoutube.png',
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ),
-                )),
-            // Positioned(
-            //   left: 32,
-            //   top: 60,
-            //   child: Text(
-            //     planetInfo.position.toString(),
-            //     style: TextStyle(
-            //       fontSize: 247,
-            //       color: Palette.primaryTextColor.withOpacity(0.08),
-            //       fontWeight: FontWeight.w900,
-            //     ),
-            //   ),
-            // ),
+
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                    child: Divider(
+                      color: Colors.black38,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30.0, bottom: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Study',
+                          style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.w600,
+                              color: Palette.blue4),
+                          textAlign: TextAlign.left,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'No study has been opened yet!',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black38),
+                          textAlign: TextAlign.left,
+                        ),
+                        SizedBox(
+                          height: 13,
+                        ),
+                        CreateModal(),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                    child: Divider(
+                      color: Colors.black38,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 30.0, bottom: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Share your feelings',
+                          style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.w600,
+                              color: Palette.blue4),
+                          textAlign: TextAlign.left,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text(
+                          'There is no shared feeling yet.',
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black38),
+                          textAlign: TextAlign.left,
+                        ),
+                        SizedBox(
+                          height: 13,
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              width: _width * 0.56,
+                              height: _height * 0.05,
+                              decoration: BoxDecoration(
+                                border:
+                                    Border.all(color: Palette.blue2, width: 1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: 8,
+                                  ),
+                                  InkWell(
+                                    child: Container(
+                                      child: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.psychology_alt,
+                                            size: _width * 0.07,
+                                            color: Palette.blue2,
+                                          ),
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            "Share your feelings",
+                                            style: TextStyle(
+                                                fontSize: 15,
+                                                color: Palette.blue2),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                CreateStudyScreen()),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                ],
+              ),
+            ),
+            Positioned(
+                child: Hero(
+              tag: planetInfo.position,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Container(
+                  color: Palette.white,
+                  width: _width,
+                  height: _height * 0.1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Liferary",
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.w600,
+                            color: Palette.blue4),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      SizedBox(
+                        width: _width * 0.15,
+                        child: Image.asset('assets/images/Icon.png'),
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )),
             Padding(
               padding: const EdgeInsets.only(left: 10.0, top: 10.0),
               child: IconButton(

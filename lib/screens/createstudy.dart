@@ -1,3 +1,4 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -5,6 +6,9 @@ import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:liferary/screens/MyPage.dart';
 import 'package:liferary/screens/login.dart';
 import 'package:liferary/utilities/palette.dart';
+
+import '../API/postController.dart';
+import 'home.dart';
 
 class CreateStudyScreen extends StatefulWidget {
   const CreateStudyScreen({super.key});
@@ -15,11 +19,54 @@ class CreateStudyScreen extends StatefulWidget {
 
 class _CreateStudyScreenState extends State<CreateStudyScreen> {
   final SearchController = TextEditingController();
+  void getFile() async {
+    FilePickerResult? result =
+        await FilePicker.platform.pickFiles(allowMultiple: true);
+
+    if (result != null) {
+      print(result.names);
+      WritePostController.selectedFile = result;
+      // 파일 사용하기
+    } else {
+      // 취소 버튼을 눌렀을 때 처리할 코드 작성
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
     return Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          centerTitle: true,
+          elevation: 0.0,
+          title: Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+          actions: [
+            Row(
+              children: [
+                Text(
+                  "yaho0919",
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Palette.blue,
+                      fontWeight: FontWeight.bold),
+                ),
+                IconButton(
+                  icon: Icon(Icons.login),
+                  onPressed: () => {
+                    // HomeScreen _l
+                    // _logout(),
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                    )
+                  },
+                ),
+              ],
+            )
+          ],
+        ),
         resizeToAvoidBottomInset: true,
         backgroundColor: Palette.white,
         // appBar: AppBar(automaticallyImplyLeading: false),
@@ -28,147 +75,21 @@ class _CreateStudyScreenState extends State<CreateStudyScreen> {
             return SingleChildScrollView(
               child: Container(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(children: [
-                      Column(children: [
-                        //logo
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(12, 0, 20, 0),
-                              child: Container(
-                                width: _width * 0.4,
-                                height: _height * 0.04,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('assets/images/logo.png'),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            //welcome write
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                              child: Text(
-                                "Welcome,\nusername!",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Palette.blue,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        Container(
-                          width: _width * 0.75,
-                          height: _height * 0.06,
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10, 5, 5, 10),
-                            child: TextField(
-                              controller: SearchController,
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.search),
-                                iconColor: Palette.white,
-                                labelText: 'Search',
-                                labelStyle: TextStyle(color: Palette.blue),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                  borderSide: BorderSide(
-                                    color: Palette.blue,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ]),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Palette.blue3,
-                              ),
-                              child: Icon(
-                                Icons.person,
-                                size: _width * 0.135,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MyPage()),
-                                );
-                              },
-                            ),
-                          ),
-                          //person icon
-                          // Padding(
-                          //   padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          //   child: Icon(
-                          //     Icons.person,
-                          //     size: _width * 0.18,
-                          //     color: Colors.grey,
-                          //   ),
-                          // ),
-
-                          //Logout button
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 0, 0, 20),
-                            child: InkWell(
-                              child: Center(
-                                  child: Container(
-                                      width: _width * 0.2,
-                                      height: _height * 0.03,
-                                      decoration: BoxDecoration(
-                                        color: Palette.blue3,
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Center(
-                                        child: Text(
-                                          "Logout",
-                                          style: TextStyle(
-                                              fontSize: 15,
-                                              color: Palette.white),
-                                        ),
-                                      ))),
-
-                              //Logout 버튼 클릭시 네비게이션 작동
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginScreen()),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      )
-                    ]),
+                    SizedBox(
+                      height: 80,
+                    ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 60, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(25, 0, 0, 0),
                       child: Container(
-                        height: _height * 0.6,
-                        width: _width * 0.9,
+                        height: _height * 0.62,
+                        width: _width * 0.89,
                         decoration: BoxDecoration(
                             color: Palette.white,
                             borderRadius: BorderRadius.circular(10.0),
                             border: Border.all(color: Palette.blue, width: 3),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey,
-                                  blurRadius: 2.0,
-                                  spreadRadius: 1.0,
-                                  offset: Offset(
-                                    1,
-                                    1,
-                                  )),
-                            ]),
+                            boxShadow: []),
                         child: Column(
                           children: [
                             Row(
@@ -192,12 +113,14 @@ class _CreateStudyScreenState extends State<CreateStudyScreen> {
                                   color: Palette.white,
                                   borderRadius: BorderRadius.circular(10),
                                   border:
-                                      Border.all(color: Palette.blue, width: 2),
+                                      Border.all(color: Palette.blue, width: 1),
                                 ),
                                 child: TextField(
+                                  style: TextStyle(fontSize: 14),
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
-                                      hintText: 'Please enter your study title',
+                                      hintText:
+                                          '  Please enter your study title.',
                                       labelStyle:
                                           TextStyle(color: Palette.blue2)),
                                   keyboardType: TextInputType.multiline,
@@ -214,15 +137,16 @@ class _CreateStudyScreenState extends State<CreateStudyScreen> {
                                   color: Palette.white,
                                   borderRadius: BorderRadius.circular(10),
                                   border:
-                                      Border.all(color: Palette.blue, width: 2),
+                                      Border.all(color: Palette.blue, width: 1),
                                 ),
                                 child: TextField(
                                   textAlign: TextAlign.left,
+                                  style: TextStyle(fontSize: 14),
                                   autofocus: true,
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
                                       hintText:
-                                          'Please enter your study contents',
+                                          '  Please write your tips contents.',
                                       labelStyle:
                                           TextStyle(color: Palette.blue2)),
                                   keyboardType: TextInputType.multiline,
@@ -234,77 +158,82 @@ class _CreateStudyScreenState extends State<CreateStudyScreen> {
                               // mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  //files
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     Container(
-                                      width: _width * 0.4,
-                                      height: _height * 0.06,
+                                      width: _width * 0.23,
+                                      height: _height * 0.05,
                                       decoration: BoxDecoration(
-                                        color: Palette.white,
-                                        borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
-                                            color: Palette.blue, width: 2),
+                                            color: Palette.blue2, width: 1),
+                                        borderRadius: BorderRadius.circular(10),
                                       ),
-                                      child: TextField(
-                                        decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: 'choose category',
-                                            labelStyle: TextStyle(
-                                                color: Palette.blue2)),
-                                        keyboardType: TextInputType.multiline,
-                                        maxLines: null,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          IconButton(
+                                              onPressed: getFile,
+                                              icon: Icon(
+                                                Icons.upload_file,
+                                                size: _width * 0.075,
+                                                color: Palette.blue2,
+                                              )),
+                                          Text(
+                                            "Files",
+                                            style: TextStyle(
+                                                fontSize: 14,
+                                                color: Palette.blue2),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                     SizedBox(
-                                      width: _width * 0.04,
-                                    ),
-                                    Container(
-                                      width: _width * 0.4,
-                                      height: _height * 0.06,
-                                      decoration: BoxDecoration(
-                                        color: Palette.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                            color: Palette.blue, width: 2),
-                                      ),
-                                      child: TextField(
-                                        decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            hintText: 'Enter your study link',
-                                            labelStyle: TextStyle(
-                                                color: Palette.blue2)),
-                                        keyboardType: TextInputType.multiline,
-                                        maxLines: null,
-                                      ),
+                                      width: 20,
                                     ),
                                   ],
                                 ),
                                 Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(0, 15, 0, 0),
-                                  child: Center(
-                                    child: Container(
-                                      //comment
-                                      width: _width * 0.4,
-                                      height: _height * 0.05,
-                                      decoration: BoxDecoration(
-                                          color: Palette.blue,
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          border:
-                                              Border.all(color: Palette.blue4)),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "registration",
-                                            style: TextStyle(
-                                                fontSize: 17,
-                                                color: Palette.white),
-                                          ),
-                                        ],
+                                  child: Container(
+                                    width: _width * 0.4,
+                                    height: _height * 0.05,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: Palette.blue2, width: 1),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: InkWell(
+                                      child: Container(
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              "Registration",
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Palette.blue2),
+                                            ),
+                                          ],
+                                        ),
                                       ),
+                                      onTap: () {
+                                        WritePostController.postWrite();
+                                        print(WritePostController
+                                            .contextController.text
+                                            .toString());
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    HomeScreen())));
+                                      },
                                     ),
                                   ),
                                 ),

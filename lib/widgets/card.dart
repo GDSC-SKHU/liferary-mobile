@@ -6,14 +6,12 @@ import 'package:liferary/utilities/palette.dart';
 class CustomCard extends StatelessWidget {
   final String name;
   final String category;
-  final String category_icon;
 
-  const CustomCard(
-      {Key? key,
-      required this.name,
-      required this.category,
-      required this.category_icon})
-      : super(key: key);
+  const CustomCard({
+    Key? key,
+    required this.name,
+    required this.category,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,33 +27,33 @@ class CustomCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                name,
-                style: TextStyle(
-                    color: Palette.blue5,
-                    fontWeight: FontWeight.w900,
-                    fontFamily: 'Avenir',
-                    fontSize: 30),
-                textAlign: TextAlign.left,
+              SizedBox(
+                width: 1000,
+                child: Text(
+                  name,
+                  style: TextStyle(
+                      // overflow: TextOverflow.ellipsis,
+                      color: Color.fromARGB(255, 77, 119, 218),
+                      fontWeight: FontWeight.w900,
+                      fontFamily: 'Avenir',
+                      fontSize: 26),
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              SizedBox(
+                height: 10,
               ),
               Row(
                 children: [
                   SizedBox(
-                    width: 30,
-                    child: Icon(
-                      Icons.clear,
-                      color: Palette.blue,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
+                    width: 5,
                   ),
                   Text(
                     category,
                     style: TextStyle(
                         color: Palette.blue4,
                         fontWeight: FontWeight.w600,
-                        fontSize: 28),
+                        fontSize: 20),
                     textAlign: TextAlign.left,
                   ),
                 ],
@@ -66,6 +64,9 @@ class CustomCard extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(
+                    width: 8,
+                  ),
                   Text(
                     "Know More",
                     style: TextStyle(
