@@ -92,309 +92,291 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
   Widget build(BuildContext context) {
     final _height = MediaQuery.of(context).size.height;
     final _width = MediaQuery.of(context).size.width;
-    return Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: Palette.white,
-        bottomNavigationBar: ConvexAppBar(
-          backgroundColor: Palette.blue,
-          items: const <TabItem>[
-            TabItem(icon: Icons.home, title: 'Home'),
-            TabItem(icon: Icons.format_list_bulleted, title: 'Posts'),
-            TabItem(icon: Icons.add, title: 'Publish'),
-            TabItem(icon: Icons.person, title: 'My Page'),
-            TabItem(icon: Icons.settings, title: 'Settings'),
-          ],
-          initialActiveIndex: _selectedIndex,
-          onTap: _bottomnavigation,
-        ),
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          centerTitle: true,
-          elevation: 0.0,
-          title: Image.asset('assets/images/logo.png', fit: BoxFit.cover),
-          actions: [
-            Row(
-              children: [
-                Text(
-                  "yaho0919",
-                  style: TextStyle(
-                      fontSize: 14,
-                      color: Palette.blue,
-                      fontWeight: FontWeight.bold),
-                ),
-                IconButton(
-                  icon: Icon(Icons.login),
-                  onPressed: () => {
-                    // HomeScreen _l
-                    // _logout(),
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
-                    )
-                  },
-                ),
-              ],
-            )
-          ],
-        ),
-        body: SafeArea(child: Builder(
-          builder: (context) {
-            return SingleChildScrollView(
-              child: Container(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Column(
-                      children: [
-                        //박스 시작
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Text(
-                              "Tag   :   ",
-                              style: TextStyle(
-                                color: Palette.blue5,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
+    return WillPopScope(
+      onWillPop: () {
+        return Future(() => false); //뒤로가기 막음
+      },
+      child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          backgroundColor: Palette.white,
+          bottomNavigationBar: ConvexAppBar(
+            backgroundColor: Palette.blue,
+            items: const <TabItem>[
+              TabItem(icon: Icons.home, title: 'Home'),
+              TabItem(icon: Icons.format_list_bulleted, title: 'Posts'),
+              TabItem(icon: Icons.add, title: 'Publish'),
+              TabItem(icon: Icons.person, title: 'My Page'),
+              TabItem(icon: Icons.settings, title: 'Settings'),
+            ],
+            initialActiveIndex: _selectedIndex,
+            onTap: _bottomnavigation,
+          ),
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            elevation: 0.0,
+            title: Image.asset('assets/images/logo.png', fit: BoxFit.cover),
+            actions: [
+              Row(
+                children: [
+                  Text(
+                    "yaho0919",
+                    style: TextStyle(
+                        fontSize: 14,
+                        color: Palette.blue,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.login),
+                    onPressed: () => {
+                      // HomeScreen _l
+                      // _logout(),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeScreen()),
+                      )
+                    },
+                  ),
+                ],
+              )
+            ],
+          ),
+          body: SafeArea(child: Builder(
+            builder: (context) {
+              return SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Column(
+                        children: [
+                          //박스 시작
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                width: 20,
                               ),
-                            ),
-                            Center(
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton2(
-                                  isExpanded: true,
-                                  hint: Row(
-                                    children: const [
-                                      Icon(
-                                        Icons.list,
-                                        size: 16,
-                                        color: Palette.blue2,
-                                      ),
-                                      SizedBox(
-                                        width: 4,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          'Select Category',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Palette.blue2,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
+                              Text(
+                                "Tag   :   ",
+                                style: TextStyle(
+                                  color: Palette.blue5,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Center(
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton2(
+                                    isExpanded: true,
+                                    hint: Row(
+                                      children: const [
+                                        Icon(
+                                          Icons.list,
+                                          size: 16,
+                                          color: Palette.blue2,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  items: items
-                                      .map((item) => DropdownMenuItem<String>(
-                                            value: item,
-                                            child: Text(
-                                              item,
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w500,
-                                                color: Palette.blue2,
-                                              ),
-                                              overflow: TextOverflow.ellipsis,
+                                        SizedBox(
+                                          width: 4,
+                                        ),
+                                        Expanded(
+                                          child: Text(
+                                            'Select Category',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: Palette.blue2,
                                             ),
-                                          ))
-                                      .toList(),
-                                  value: selectedValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedValue = value as String;
-                                    });
-                                  },
-                                  buttonStyleData: ButtonStyleData(
-                                    height: _height * 0.05,
-                                    width: _width * 0.5,
-                                    padding: const EdgeInsets.only(
-                                        left: 14, right: 14),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: Palette.blue2, width: 1),
-                                      borderRadius: BorderRadius.circular(10),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                  iconStyleData: const IconStyleData(
-                                    icon: Icon(
-                                      Icons.arrow_drop_down,
+                                    items: items
+                                        .map((item) => DropdownMenuItem<String>(
+                                              value: item,
+                                              child: Text(
+                                                item,
+                                                style: const TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: Palette.blue2,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ))
+                                        .toList(),
+                                    value: selectedValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedValue = value as String;
+                                      });
+                                    },
+                                    buttonStyleData: ButtonStyleData(
+                                      height: _height * 0.05,
+                                      width: _width * 0.5,
+                                      padding: const EdgeInsets.only(
+                                          left: 14, right: 14),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Palette.blue2, width: 1),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
                                     ),
-                                    iconSize: 28,
-                                    iconEnabledColor: Colors.lightBlueAccent,
-                                    iconDisabledColor: Colors.grey,
-                                  ),
-                                  dropdownStyleData: DropdownStyleData(
-                                    maxHeight: 200,
-                                    width: 200,
-                                    padding: null,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(14),
-                                      color: Palette.white,
+                                    iconStyleData: const IconStyleData(
+                                      icon: Icon(
+                                        Icons.arrow_drop_down,
+                                      ),
+                                      iconSize: 28,
+                                      iconEnabledColor: Colors.lightBlueAccent,
+                                      iconDisabledColor: Colors.grey,
                                     ),
-                                    elevation: 8,
-                                    offset: const Offset(30, -5),
-                                    scrollbarTheme: ScrollbarThemeData(
-                                      radius: const Radius.circular(40),
-                                      thickness:
-                                          MaterialStateProperty.all<double>(6),
-                                      thumbVisibility:
-                                          MaterialStateProperty.all<bool>(true),
+                                    dropdownStyleData: DropdownStyleData(
+                                      maxHeight: 200,
+                                      width: 200,
+                                      padding: null,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(14),
+                                        color: Palette.white,
+                                      ),
+                                      elevation: 8,
+                                      offset: const Offset(30, -5),
+                                      scrollbarTheme: ScrollbarThemeData(
+                                        radius: const Radius.circular(40),
+                                        thickness:
+                                            MaterialStateProperty.all<double>(
+                                                6),
+                                        thumbVisibility:
+                                            MaterialStateProperty.all<bool>(
+                                                true),
+                                      ),
                                     ),
-                                  ),
-                                  menuItemStyleData: const MenuItemStyleData(
-                                    height: 40,
-                                    padding:
-                                        EdgeInsets.only(left: 14, right: 14),
+                                    menuItemStyleData: const MenuItemStyleData(
+                                      height: 40,
+                                      padding:
+                                          EdgeInsets.only(left: 14, right: 14),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 25,
-                            ),
-                            Container(
-                              width: _width * 0.6,
-                              child: TextField(
-                                controller: WritePostController.titleController,
-                                decoration: InputDecoration(
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Palette.blue3),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 25,
+                              ),
+                              Container(
+                                width: _width * 0.6,
+                                child: TextField(
+                                  controller:
+                                      WritePostController.titleController,
+                                  decoration: InputDecoration(
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Palette.blue3),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Palette.blue5, width: 2),
+                                    ),
+                                    hintText: 'Please enter the title.',
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Palette.blue5, width: 2),
-                                  ),
-                                  hintText: 'Please enter the title.',
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
                                 ),
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(
+                            height: 10,
+                          ),
+
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                            child: Container(
+                              width: _width * 0.9,
+                              height: _height * 0.3,
+                              decoration: BoxDecoration(
+                                color: Palette.white,
+                                borderRadius: BorderRadius.circular(10),
+                                border:
+                                    Border.all(color: Palette.blue2, width: 1),
+                              ),
+                              child: TextField(
+                                controller:
+                                    WritePostController.contextController,
+                                textAlign: TextAlign.left,
+                                autofocus: true,
+                                decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: ' Write your tips contents',
+                                    labelStyle:
+                                        TextStyle(color: Palette.blue2)),
                                 keyboardType: TextInputType.multiline,
                                 maxLines: null,
                               ),
                             ),
-                          ],
-                        ),
-
-                        SizedBox(
-                          height: 10,
-                        ),
-
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                          child: Container(
-                            width: _width * 0.9,
-                            height: _height * 0.3,
-                            decoration: BoxDecoration(
-                              color: Palette.white,
-                              borderRadius: BorderRadius.circular(10),
-                              border:
-                                  Border.all(color: Palette.blue2, width: 1),
-                            ),
-                            child: TextField(
-                              controller: WritePostController.contextController,
-                              textAlign: TextAlign.left,
-                              autofocus: true,
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: ' Write your tips contents',
-                                  labelStyle: TextStyle(color: Palette.blue2)),
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                            ),
                           ),
-                        ),
 
-                        Row(
-                          //files
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Container(
-                              width: _width * 0.23,
-                              height: _height * 0.05,
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Palette.blue2, width: 1),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  IconButton(
-                                      onPressed: getFile,
-                                      icon: Icon(
-                                        Icons.upload_file,
-                                        size: _width * 0.075,
-                                        color: Palette.blue2,
-                                      )),
-                                  Text(
-                                    "Files",
-                                    style: TextStyle(
-                                        fontSize: 14, color: Palette.blue2),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-
-                        Column(
-                          // mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                CreateModal(),
-                                SizedBox(
-                                  width: _width * 0.09,
+                          Row(
+                            //files
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Container(
+                                width: _width * 0.23,
+                                height: _height * 0.05,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Palette.blue2, width: 1),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                Container(
-                                  // alignment: Alignment.center,
-                                  //comment
-                                  width: _width * 0.4,
-                                  height: _height * 0.05,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Palette.blue2, width: 1),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    IconButton(
+                                        onPressed: getFile,
+                                        icon: Icon(
+                                          Icons.upload_file,
+                                          size: _width * 0.075,
+                                          color: Palette.blue2,
+                                        )),
+                                    Text(
+                                      "Files",
+                                      style: TextStyle(
+                                          fontSize: 14, color: Palette.blue2),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: 20,
+                              ),
+                              InkWell(
+                                child: Container(
                                   child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      SizedBox(
-                                        width: 25,
+                                      Icon(
+                                        Icons.play_circle_outline,
+                                        size: _width * 0.07,
+                                        color: Palette.blue2,
                                       ),
-                                      IconButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      HomeScreen()),
-                                            );
-                                          },
-                                          icon: Icon(
-                                            Icons.play_circle_outline,
-                                            size: _width * 0.07,
-                                            color: Palette.blue2,
-                                          )),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
                                       Text(
                                         "Youtube",
                                         style: TextStyle(
@@ -403,62 +385,105 @@ class _Share_writeScreenState extends State<Share_writeScreen> {
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Container(
-                              width: _width * 0.4,
-                              height: _height * 0.05,
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Palette.blue2, width: 1),
-                                borderRadius: BorderRadius.circular(10),
+                                onTap: () {},
                               ),
-                              child: Row(
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Container(
+                                width: _width * 0.6,
+                                height: _height * 0.06,
+                                child: TextField(
+                                  decoration: InputDecoration(
+                                      enabledBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Palette.blue5),
+                                      ),
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide: BorderSide(
+                                            color: Palette.blue5, width: 2),
+                                      ),
+                                      hintText:
+                                          "Please enter the YouTube link.",
+                                      hintStyle: TextStyle(fontSize: 10)),
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Image.asset('assets/images/writeyoutube.png',
+                              fit: BoxFit.cover),
+
+                          Column(
+                            // mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   SizedBox(
-                                    width: 10,
-                                  ),
-                                  IconButton(
-                                      onPressed: () {
-                                        WritePostController.postWrite();
-                                        print(WritePostController
-                                            .contextController.text
-                                            .toString());
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: ((context) =>
-                                                    HomeScreen())));
-                                      },
-                                      icon: Icon(
-                                        Icons.menu_book,
-                                        size: _width * 0.07,
-                                        color: Palette.blue2,
-                                      )),
-                                  Text(
-                                    "Registration",
-                                    style: TextStyle(
-                                        fontSize: 15, color: Palette.blue2),
+                                    width: _width * 0.09,
                                   ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    // SizedBox(
-                    //   height: 100,
-                    // ),
-                  ],
+                              SizedBox(
+                                height: 20,
+                              ),
+                              Container(
+                                width: _width * 0.4,
+                                height: _height * 0.05,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Palette.blue2, width: 1),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: InkWell(
+                                  child: Container(
+                                    child: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.menu_book,
+                                          size: _width * 0.07,
+                                          color: Palette.blue2,
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          "Registration",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              color: Palette.blue2),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    WritePostController.postWrite();
+                                    print(WritePostController
+                                        .contextController.text
+                                        .toString());
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                HomeScreen())));
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
-        )));
+              );
+            },
+          ))),
+    );
   }
 }

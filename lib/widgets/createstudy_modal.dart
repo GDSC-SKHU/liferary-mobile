@@ -32,22 +32,32 @@ class _CreateModalState extends State<CreateModal> {
               SizedBox(
                 width: 8,
               ),
-              IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CreateStudyScreen()),
-                    );
-                  },
-                  icon: Icon(
-                    Icons.school,
-                    size: _width * 0.07,
-                    color: Palette.blue2,
-                  )),
-              Text(
-                "Create study",
-                style: TextStyle(fontSize: 15, color: Palette.blue2),
+              InkWell(
+                child: Container(
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.school,
+                        size: _width * 0.07,
+                        color: Palette.blue2,
+                      ),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        "Create study",
+                        style: TextStyle(fontSize: 15, color: Palette.blue2),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreateStudyScreen()),
+                  );
+                },
               ),
             ],
           ),

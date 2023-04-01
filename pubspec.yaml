@@ -49,8 +49,15 @@ flutter:
   - assets/icons/putyourhandsup.svg
   - assets/images/shuttle.png
   - assets/images/Icon.png
-  - assets/images/earth.png
-  - assets/images/jupiter.png
-  - assets/images/mars.png
-  - assets/images/mercury.png
-  - assets/images/venus.png
+  - assets/images/MainScreen.png
+  - assets/images/WriteScreen.png
+  - assets/images/rice.png
+  - assets/images/lamen.png
+  - assets/images/chicken.png
+  - assets/images/smore.png
+  - assets/images/writeyoutube.png
+  - assets/images/mainpostyoutube.png
+  - assets/images/bulgogi.png
+  - assets/images/java.png
+  - assets/images/googlemeet.png
+  - assets/images/oop.png
